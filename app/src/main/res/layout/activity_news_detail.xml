@@ -11,6 +11,7 @@
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="13dp"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/dateTextViewOfDetail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,9 +19,10 @@
     <TextView
         android:id="@+id/dateTextViewOfDetail"
         android:layout_width="0dp"
-        android:layout_height="15dp"
+        android:layout_height="20dp"
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@id/imageViewOfDetail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +31,7 @@
     <ImageView
         android:id="@+id/imageViewOfDetail"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@id/contentTextViewOfDetail"
