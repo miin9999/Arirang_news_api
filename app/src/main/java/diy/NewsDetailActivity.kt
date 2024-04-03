@@ -24,9 +24,11 @@ class NewsDetailActivity :AppCompatActivity() {
         val contentData = intent.getStringExtra("putContentData")
         val titleData = intent.getStringExtra("putTitleData")
         val thumbUrlData = intent.getStringExtra("putThumbUrl")
+        val dateData = intent.getStringExtra("putDate")
 
         bindingOfDetail.contentTextViewOfDetail.text = contentData
         bindingOfDetail.titleTextviewOfDetail.text = titleData
+        bindingOfDetail.dateTextViewOfDetail.text = dateData
 
         // textView 에 스크롤바 달아주기 - content 밑 부분이 잘리는 현상 해결
         bindingOfDetail.contentTextViewOfDetail.movementMethod = ScrollingMovementMethod.getInstance()

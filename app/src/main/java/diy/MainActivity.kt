@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                     putExtra("putContentData",data.content)
                     putExtra("putTitleData",data.title)
                     putExtra("putThumbUrl",data.thumUrl)
+                    putExtra("putDate",data.broadcastDate)
 
                     Log.d("fdsfefef",data.content.toString())
                     //Log.d("who first","main")
@@ -78,8 +79,6 @@ class MainActivity : AppCompatActivity() {
 
                 val dataSet = Repository.getNewsFromApiService(1, 15)
                 Log.d("DATA SET",dataSet.toString())
-
-
 
                 adapter.submitList(dataSet)
 
