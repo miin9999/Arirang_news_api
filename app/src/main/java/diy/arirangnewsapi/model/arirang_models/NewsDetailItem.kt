@@ -1,13 +1,12 @@
-package diy.arirangnewsapi.arirang_models
+package diy.arirangnewsapi.model.arirang_models
 
 
-import android.annotation.SuppressLint
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
+import kotlinx.parcelize.Parcelize
 
-data class Item(
+@Parcelize
+data class NewsDetailItem(
     @SerializedName("broadcast_date")
     var broadcastDate: String?,
     @SerializedName("content")
@@ -18,4 +17,4 @@ data class Item(
     var thumUrl: String?,
     @SerializedName("title")
     var title: String?
-)
+):Parcelable

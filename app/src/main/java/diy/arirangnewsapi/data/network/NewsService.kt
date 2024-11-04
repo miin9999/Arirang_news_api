@@ -1,11 +1,12 @@
-package diy.arirangnewsapi
+package diy.arirangnewsapi.data.network
 
-import diy.arirangnewsapi.arirang_models.ArirangResponseModel
+import diy.arirangnewsapi.BuildConfig
+import diy.arirangnewsapi.model.arirang_models.NewsResponseModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ArirangService {
+interface NewsService {
 
 
     @GET("news?" +
@@ -13,6 +14,6 @@ interface ArirangService {
     suspend fun getNews(
         @Query("pageNo") pageNo:Int,
         @Query("numOfRows") numOfRows:Int,
-    ):Response<ArirangResponseModel>
+    ):Response<NewsResponseModel>
 
 }

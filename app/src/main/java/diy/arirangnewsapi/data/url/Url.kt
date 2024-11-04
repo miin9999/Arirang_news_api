@@ -1,4 +1,4 @@
-package diy.arirangnewsapi
+package diy.arirangnewsapi.data.url
 
 object Url {
 
