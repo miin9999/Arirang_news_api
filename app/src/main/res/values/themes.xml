@@ -1,9 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+
+
     <!-- Base application theme. -->
     <style name="Base.Theme.ArirangNewsApi" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="toolbarWithArrowButtonStyle">@style/Widget.News.Toolbar.WithArrow</item>
+
+
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.ArirangNewsApi" parent="Base.Theme.ArirangNewsApi" />
+    <style name="Theme.ArirangNewsApi" parent="Base.Theme.ArirangNewsApi"/>
+
+
+    <style name="Theme.AppBarOverlay" parent="Theme.ArirangNewsApi">
+
+
+    </style>
+
+
+
 </resources>

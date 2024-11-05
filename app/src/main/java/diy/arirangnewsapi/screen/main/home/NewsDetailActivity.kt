@@ -1,7 +1,9 @@
 package diy.arirangnewsapi.screen.main.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import diy.arirangnewsapi.databinding.ActivityNewsDetailBinding
@@ -24,7 +26,8 @@ class NewsDetailActivity :AppCompatActivity() {
             with(binding){
                 contentTextViewOfDetail.text = it.content
                 titleTextviewOfDetail.text = it.title
-                dateTextViewOfDetail.text=it.broadcastDate
+                dateTextViewOfDetail.text= it.broadcastDate
+                Log.d("news Url",newsDetailItem.newsUrl.toString())
 
             }
         }
@@ -41,6 +44,11 @@ class NewsDetailActivity :AppCompatActivity() {
 
         // textView 에 스크롤바 달아주기 - content 밑 부분이 잘리는 현상 해결
         binding.contentTextViewOfDetail.movementMethod = ScrollingMovementMethod.getInstance()
+
+
+        binding.toolbar.setOnClickListener{
+            finish()
+        }
 
 
     }

@@ -7,4 +7,7 @@ interface NewsItemClickListener: AdapterListener {
 
     fun onItemClick(newsModel: NewsDetailItem){
     }
+
+    fun fdfdv(){}
+
 }
