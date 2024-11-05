@@ -30,6 +30,7 @@ class NewsAdapter(
             binding.contentTextView.text = newsModel.content
             binding.root.setOnClickListener{
                 listener.onItemClick(newsModel)
+
             }
 
             Glide
