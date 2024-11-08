@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import diy.arirangnewsapi.model.arirang_models.NewsDetailItem
+import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.databinding.NewsListBinding
 import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 
 
 class NewsAdapter(
     private val listener : NewsItemClickListener
-): ListAdapter<NewsDetailItem,NewsAdapter.NewsViewHolder>(differ){
+): ListAdapter<NewsDetailModel,NewsAdapter.NewsViewHolder>(differ){
 
 
 
@@ -24,7 +24,7 @@ class NewsAdapter(
 
 
 
-        fun bind(newsModel: NewsDetailItem){
+        fun bind(newsModel: NewsDetailModel){
 
             binding.titleTextView.text = newsModel.title
             binding.contentTextView.text = newsModel.content
@@ -60,12 +60,12 @@ class NewsAdapter(
 
 
     companion object{
-        val differ = object : DiffUtil.ItemCallback<NewsDetailItem>(){
-            override fun areItemsTheSame(oldNewsDetailItem: NewsDetailItem, newNewsDetailItem: NewsDetailItem): Boolean {
+        val differ = object : DiffUtil.ItemCallback<NewsDetailModel>(){
+            override fun areItemsTheSame(oldNewsDetailModel: NewsDetailModel, newNewsDetailModel: NewsDetailModel): Boolean {
                 TODO("Not yet implemented")
             }
 
-            override fun areContentsTheSame(oldNewsDetailItem: NewsDetailItem, newNewsDetailItem: NewsDetailItem): Boolean {
+            override fun areContentsTheSame(oldNewsDetailModel: NewsDetailModel, newNewsDetailModel: NewsDetailModel): Boolean {
                 TODO("Not yet implemented")
             }
 

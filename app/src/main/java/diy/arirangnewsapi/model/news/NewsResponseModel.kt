@@ -1,11 +1,11 @@
-package diy.arirangnewsapi.model.arirang_models
+package diy.arirangnewsapi.model.news
 
 
 import com.google.gson.annotations.SerializedName
 
 data class NewsResponseModel(
     @SerializedName("items")
-    var newsDetailItems: List<NewsDetailItem?>?,
+    var newsDetailModels: List<NewsDetailModel?>?,
     @SerializedName("numOfRows")
     var numOfRows: Int?,
     @SerializedName("pageNo")

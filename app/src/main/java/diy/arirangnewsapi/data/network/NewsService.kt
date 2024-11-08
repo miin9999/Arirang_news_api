@@ -1,7 +1,7 @@
 package diy.arirangnewsapi.data.network
 
 import diy.arirangnewsapi.BuildConfig
-import diy.arirangnewsapi.model.arirang_models.NewsResponseModel
+import diy.arirangnewsapi.model.news.NewsResponseModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
