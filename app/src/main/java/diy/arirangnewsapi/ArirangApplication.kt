@@ -3,6 +3,7 @@ package diy.arirangnewsapi
 import android.app.Application
 import android.content.Context
 import diy.arirangnewsapi.di.appModule
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class ArirangApplication : Application() {
@@ -11,8 +12,8 @@ class ArirangApplication : Application() {
         super.onCreate()
         appContext = this
 
-        startKoin{
-
+        startKoin {
+            androidContext(this@ArirangApplication)
             modules(appModule)
         }
 
@@ -22,7 +23,6 @@ class ArirangApplication : Application() {
         super.onTerminate()
         appContext = null
     }
-
 
 
     companion object {

@@ -1,29 +1,40 @@
 package diy.arirangnewsapi.data.repository.News
 
+import diy.arirangnewsapi.data.db.dao.NewsDao
+import diy.arirangnewsapi.data.entity.NewsDetailEntity
 import diy.arirangnewsapi.data.network.NewsService
-import diy.arirangnewsapi.data.url.Url
-import diy.arirangnewsapi.model.arirang_models.NewsDetailItem
+import diy.arirangnewsapi.model.news.NewsDetailModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 class DefaultNewsRepository(
     private val newsApiService:NewsService,
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    private val newsDao: NewsDao
 ): NewsRepository {
 
     // 다른 화면에서 쓸 suspend 함수
     override suspend fun getNews(
         pageNo:Int,numOfRows:Int
-    ) : List<NewsDetailItem?>?= withContext(ioDispatcher){
+    ) : List<NewsDetailModel?>?= withContext(ioDispatcher){
         newsApiService.getNews(pageNo = pageNo, numOfRows = numOfRows)
             .body()
-            ?.newsDetailItems
+            ?.newsDetailModels
     }
 
+    override suspend fun getOneScrapedNews(newsId: Long): NewsDetailEntity? = withContext(ioDispatcher) {
+        newsDao.getOneNews(newsId)
+    }
 
+    override suspend fun getAllScrapedNews(): List<NewsDetailEntity?> = withContext(ioDispatcher){
+        newsDao.getAllNews()
+    }
 
+    override suspend fun insertNews(newsDetailEntity: NewsDetailEntity) = withContext(ioDispatcher){
+        newsDao.insertNews(newsDetailEntity)
+    }
 
+    override suspend fun clearAllScrapedNews() = withContext(ioDispatcher) {
+        newsDao.deleteAllNews()
+    }
 }
