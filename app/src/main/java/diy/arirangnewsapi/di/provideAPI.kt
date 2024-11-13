@@ -39,7 +39,7 @@ fun buildOkHttpClient(): OkHttpClient {
         interceptor.level = HttpLoggingInterceptor.Level.NONE
     }
     return OkHttpClient.Builder()
-        .connectTimeout(4, TimeUnit.SECONDS)
+        .connectTimeout(10, TimeUnit.SECONDS)
         .addInterceptor(interceptor)
         .build()
 }

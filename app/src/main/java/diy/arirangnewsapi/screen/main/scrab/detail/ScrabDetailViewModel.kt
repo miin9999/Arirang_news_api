@@ -1,4 +1,4 @@
-package diy.arirangnewsapi.screen.main.scrab
+package diy.arirangnewsapi.screen.main.scrab.detail
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -11,18 +11,17 @@ import diy.arirangnewsapi.screen.base.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ScrabViewModel(
-    newsRepository: NewsRepository
+class ScrabDetailViewModel(
+    private val newsDetailEntity: NewsDetailEntity,
 ): BaseViewModel() {
 
 
-    val scrapedFragmentLiveData: LiveData<List<NewsDetailEntity?>> = newsRepository.getAllScrapedNews()
+    val scrapedDetailLiveData = MutableLiveData<NewsDetailEntity>()
 
 
     override fun fetchData(): Job = viewModelScope.launch {
 
-
-
+        scrapedDetailLiveData.value = newsDetailEntity
     }
 
 }

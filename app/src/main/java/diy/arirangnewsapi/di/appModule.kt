@@ -9,6 +9,7 @@ import diy.arirangnewsapi.screen.main.home.detail.NewsDetailViewModel
 import diy.arirangnewsapi.screen.main.myword.MyWordViewModel
 import diy.arirangnewsapi.screen.main.profile.ProfileViewModel
 import diy.arirangnewsapi.screen.main.scrab.ScrabViewModel
+import diy.arirangnewsapi.screen.main.scrab.detail.ScrabDetailViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -20,7 +21,8 @@ val appModule = module{
     viewModel{ HomeViewModel(get())}
     viewModel{ MyWordViewModel()}
     viewModel{ ProfileViewModel()}
-    viewModel{ ScrabViewModel()}
+    viewModel{ ScrabViewModel(get())}
+    viewModel{ (newsDetailEntity:NewsDetailEntity)-> ScrabDetailViewModel(newsDetailEntity) }
     viewModel{ (newsDetailEntity:NewsDetailEntity) -> NewsDetailViewModel(newsDetailEntity,get()) }
 
 

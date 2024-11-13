@@ -19,7 +19,7 @@ class NewsDetailViewModel(
 ):BaseViewModel() {
 
 
-    // 디테일티비니까 어차피 데이터는 한 가지만 들어옴
+    // 디테일 액티티비니까 어차피 데이터는 한 가지만 들어옴
     // 현재 내가 보고 있는 뉴스의 데이터만 있는 상태
     val scrapedNewsLiveData = MutableLiveData<NewsDetailEntity>()
 
@@ -30,27 +30,11 @@ class NewsDetailViewModel(
 
 
 
-
     fun insertThisNews() = viewModelScope.launch {
-
-
-        Log.d("vfknkfb", newsRepository.getAllScrapedNews()?.size.toString())
-
-        val newsList : List<NewsDetailEntity?>? = newsRepository.getAllScrapedNews()
-        if (newsList != null) {
-            for (news in newsList) {
-
-                Log.d("ffefbvbbb","News ID: ${news?.id}, Title: ${news?.title}")
-            }
-        }
-
 
         // room에 insert해주기
         newsRepository.insertNews(newsDetailEntity)
-        Log.d("idWhat", newsDetailEntity.id.toString())
-
-
-
+        Log.d("insertedNews.title", newsDetailEntity.title.toString())
 
 
     }

@@ -5,7 +5,7 @@ import diy.arirangnewsapi.widget.adapter.listener.AdapterListener
 
 interface NewsItemClickListener: AdapterListener {
 
-    fun onItemClick(newsModel: NewsDetailModel){
+    fun onItemClick(newsDetailModel: NewsDetailModel){
     }
 
     fun fdfdv(){}

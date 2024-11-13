@@ -9,11 +9,9 @@ import kotlinx.parcelize.Parcelize
 @androidx.room.Entity
 data class NewsDetailEntity(
 
-    @PrimaryKey(autoGenerate = true)
-    override val id: Long? = null,
     var broadcastDate: String?,
     var content: String?,
-    var newsUrl: String?,
+    @PrimaryKey var newsUrl: String,
     var thumUrl: String?,
     var title: String?
-):Entity,Parcelable
+):Parcelable

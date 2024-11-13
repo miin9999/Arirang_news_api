@@ -1,5 +1,6 @@
 package diy.arirangnewsapi.data.repository.News
 
+import androidx.lifecycle.LiveData
 import diy.arirangnewsapi.data.db.dao.NewsDao
 import diy.arirangnewsapi.data.entity.NewsDetailEntity
 import diy.arirangnewsapi.data.network.NewsService
@@ -26,9 +27,8 @@ class DefaultNewsRepository(
         newsDao.getOneNews(newsId)
     }
 
-    override suspend fun getAllScrapedNews(): List<NewsDetailEntity?> = withContext(ioDispatcher){
-        newsDao.getAllNews()
-    }
+    override fun getAllScrapedNews(): LiveData<List<NewsDetailEntity?>> = newsDao.getAllNews()
+
 
     override suspend fun insertNews(newsDetailEntity: NewsDetailEntity) = withContext(ioDispatcher){
         newsDao.insertNews(newsDetailEntity)

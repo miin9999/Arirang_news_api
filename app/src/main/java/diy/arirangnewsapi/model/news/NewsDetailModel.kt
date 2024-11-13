@@ -12,7 +12,7 @@ data class NewsDetailModel(
     var broadcastDate: String?,
     var content: String?,
     @SerializedName("news_url")
-    var newsUrl: String?,
+    var newsUrl: String,
     @SerializedName("thum_url")
     var thumUrl: String?,
     var title: String?
@@ -27,5 +27,18 @@ data class NewsDetailModel(
             thumUrl = thumUrl,
             title = title
         )
+    }
+    companion object {
+        fun toModel(entities: List<NewsDetailEntity?>?): List<NewsDetailModel> {
+            return entities?.map { entity ->
+                NewsDetailModel(
+                    broadcastDate = entity?.broadcastDate,
+                    content = entity?.content,
+                    newsUrl = entity?.newsUrl ?: "",
+                    thumUrl = entity?.thumUrl,
+                    title = entity?.title
+                )
+            } ?: emptyList() // null 처리: entities가 null일 경우 빈 리스트 반환
+        }
     }
 }

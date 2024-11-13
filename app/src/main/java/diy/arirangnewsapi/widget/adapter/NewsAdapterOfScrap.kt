@@ -8,18 +8,18 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import diy.arirangnewsapi.model.news.NewsDetailModel
-import diy.arirangnewsapi.databinding.NewsListBinding
+import diy.arirangnewsapi.databinding.NewsListScrapBinding
 import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 
 
-class NewsAdapter(
+class NewsAdapterOfScrap(
     private val listener : NewsItemClickListener
-): ListAdapter<NewsDetailModel,NewsAdapter.NewsViewHolder>(differ){
+): ListAdapter<NewsDetailModel,NewsAdapterOfScrap.NewsViewHolder>(differ){
 
 
 
     inner class NewsViewHolder(
-        private val binding: NewsListBinding
+        private val binding: NewsListScrapBinding
     ):RecyclerView.ViewHolder(binding.root){
 
 
@@ -46,7 +46,7 @@ class NewsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
 
-        return NewsViewHolder(NewsListBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return NewsViewHolder(NewsListScrapBinding.inflate(LayoutInflater.from(parent.context),parent,false))
 
 
     }
@@ -62,11 +62,11 @@ class NewsAdapter(
     companion object{
         val differ = object : DiffUtil.ItemCallback<NewsDetailModel>(){
             override fun areItemsTheSame(oldNewsDetailModel: NewsDetailModel, newNewsDetailModel: NewsDetailModel): Boolean {
-                TODO("Not yet implemented")
+                return oldNewsDetailModel.newsUrl == newNewsDetailModel.newsUrl
             }
 
             override fun areContentsTheSame(oldNewsDetailModel: NewsDetailModel, newNewsDetailModel: NewsDetailModel): Boolean {
-                TODO("Not yet implemented")
+                return oldNewsDetailModel == newNewsDetailModel
             }
 
         }

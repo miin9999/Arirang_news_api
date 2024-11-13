@@ -1,12 +1,11 @@
 package diy.arirangnewsapi.screen.main.home
 
-import android.content.Intent
 import android.util.Log
 import diy.arirangnewsapi.databinding.FragmentHomeBinding
 import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.screen.base.BaseFragment
 import diy.arirangnewsapi.screen.main.home.detail.NewsDetailActivity
-import diy.arirangnewsapi.widget.adapter.NewsAdapter
+import diy.arirangnewsapi.widget.adapter.NewsAdapterOfHome
 import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -17,7 +16,7 @@ class HomeFragment: BaseFragment<HomeViewModel,FragmentHomeBinding>() {
     override fun getViewBinding(): FragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater)
 
     private val recyclerViewAdapter by lazy{
-        NewsAdapter(object: NewsItemClickListener{
+        NewsAdapterOfHome(object: NewsItemClickListener{
             override fun onItemClick(newsDetailModel: NewsDetailModel) {
 
                 startActivity(
@@ -30,7 +29,6 @@ class HomeFragment: BaseFragment<HomeViewModel,FragmentHomeBinding>() {
 
         })
     }
-
 
 
     override fun observeData() = viewModel.newsListLiveData.observe(viewLifecycleOwner){

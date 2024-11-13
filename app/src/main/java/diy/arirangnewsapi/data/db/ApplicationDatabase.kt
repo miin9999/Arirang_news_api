@@ -8,7 +8,7 @@ import diy.arirangnewsapi.data.entity.NewsDetailEntity
 
 @Database(
     entities =[NewsDetailEntity::class],
-    version = 3,
+    version = 1,
     exportSchema = false
 )
 abstract class ApplicationDatabase:RoomDatabase() {
