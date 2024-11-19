@@ -13,5 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
-# Private key 파일 제외
-app/src/main/assets/private_key.json
+
+# Google Cloud Service Account Credentials
+app/src/main/assets/arirangnewsappKeyfile.json
