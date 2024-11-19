@@ -21,6 +21,6 @@ class DefaultTransRepository(
 
     override fun getAllWord(): LiveData<List<WordEntity?>> = wordDao.getAllWords()
     //override fun getAllWord(): LiveData<List<WordEntity?>> = wordDao.getAllWords()
-    //override fun getAllWord(): LiveData<List<WordEntity?>> = wordDao.getAllWords()
+
 
 }
