@@ -17,8 +17,8 @@ class MyWordFragment:BaseFragment<MyWordViewModel,FragmentMywordBinding>() {
     override fun getViewBinding():FragmentMywordBinding = FragmentMywordBinding.inflate(layoutInflater)
 
     override fun observeData() = viewModel.wordsFromRoom.observe(viewLifecycleOwner){
-        Log.d("wordFromRoom",it.first()?.wordString.toString())
-        binding.textView.text = it.first()?.wordString
+        Log.d("wordFromRoom",it.first()?.translatedWord.toString())
+        binding.textView.text = it.first()?.translatedWord
     }
 
 

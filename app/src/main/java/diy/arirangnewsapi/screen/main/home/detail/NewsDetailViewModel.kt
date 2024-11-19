@@ -37,13 +37,17 @@ class NewsDetailViewModel(
     }
 
 
-    suspend fun addButtonToVoca(text: String) {
+    suspend fun addButtonToVoca(originalWord: String) {
 
         val translation = translateService.translate(
-            text,
+            originalWord,
             Translate.TranslateOption.targetLanguage("ko")
         )
-        val textToWordEntity = WordEntity(10, translation.translatedText)
+        // [원래 단어,번역된 단어]를 wordEntity 로 바꾸기
+        val textToWordEntity = WordEntity(
+            originalWord = originalWord,
+            translatedWord = translation.translatedText
+        )
 
         Log.d("insertComplete", textToWordEntity.toString())
 
