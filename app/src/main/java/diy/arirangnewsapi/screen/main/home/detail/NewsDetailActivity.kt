@@ -1,19 +1,22 @@
 package diy.arirangnewsapi.screen.main.home.detail
 
+import android.annotation.SuppressLint
+import android.view.ActionMode
+import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import diy.arirangnewsapi.R
 import diy.arirangnewsapi.data.entity.NewsDetailEntity
 import diy.arirangnewsapi.databinding.ActivityNewsDetailBinding
-import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.screen.base.BaseActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -40,9 +43,77 @@ class NewsDetailActivity : BaseActivity<NewsDetailViewModel, ActivityNewsDetailB
         ActivityNewsDetailBinding.inflate(layoutInflater)
 
 
-    override fun initViews() = Unit
 
-    override fun observeData() = viewModel.scrapedNewsLiveData.observe(this@NewsDetailActivity) {
+    @SuppressLint("ClickableViewAccessibility")
+    override fun initViews() = with(binding){
+
+
+        Log.d("ActionMode", "Action mode started222??")
+        val textView : TextView = binding.contentTextViewOfDetail
+        textView.customSelectionActionModeCallback = object : ActionMode.Callback{
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                Log.d("ActionMode", "Action mode started")
+                // 기존 메뉴를 비우고 커스텀 메뉴 추가
+                menu?.let{
+                    menu.clear()
+                    menu.add("추가")
+                        .setOnMenuItemClickListener {
+                            // 선택된 텍스트 가져오기
+                            val selectedText = textView.text.substring(textView.selectionStart, textView.selectionEnd)
+                            lifecycleScope.launch {
+                                try{
+                                    withContext(Dispatchers.IO){
+                                        addToVocabulary(selectedText)
+                                    }
+                                    withContext(Dispatchers.Main) {
+                                        Toast.makeText(this@NewsDetailActivity, "단어가 저장되었습니다!", Toast.LENGTH_SHORT).show()
+                                    }
+
+                                }catch (e:Exception){
+                                    Log.e("Error", "작업 실패: ${e.message}")
+                                    withContext(Dispatchers.Main) {
+                                        Toast.makeText(this@NewsDetailActivity, "저장 중 오류 발생!", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                            }
+
+                        mode?.finish() // 액션 모드 종료
+                        true
+                    }
+                }
+
+                return true
+            }
+
+            override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean {
+                return true
+            }
+
+            override fun onActionItemClicked(p0: ActionMode?, p1: MenuItem?): Boolean {
+                return true
+            }
+
+            override fun onDestroyActionMode(p0: ActionMode?) {
+
+            }
+
+        }
+    }
+
+    suspend fun addToVocabulary(textThatIWantToTranslate: String){
+        //todo 번역 후, room에 저장
+
+        viewModel.addButtonToVoca(textThatIWantToTranslate)
+
+
+    }
+
+
+
+
+
+    override fun observeData() = viewModel.currentNewsImLookingInDetailLiveData.observe(this@NewsDetailActivity) {
         it?.let {
             with(binding) {
                 contentTextViewOfDetail.text = it.content
@@ -58,7 +129,8 @@ class NewsDetailActivity : BaseActivity<NewsDetailViewModel, ActivityNewsDetailB
                 .load(it.thumUrl)
                 .into(imageViewOfDetail)
             // textView 에 스크롤바 달아주기 - content 밑 부분이 잘리는 현상 해결
-            contentTextViewOfDetail.movementMethod = ScrollingMovementMethod.getInstance()
+
+
 
         }
 
@@ -86,8 +158,26 @@ class NewsDetailActivity : BaseActivity<NewsDetailViewModel, ActivityNewsDetailB
             }
 
             R.id.ic_save -> {
+
                 Toast.makeText(this, "스크랩되었습니다", Toast.LENGTH_SHORT).show()
                 viewModel.insertThisNews()
+
+
+
+                viewModel.currentNewsImLookingInDetailLiveData.observe(this@NewsDetailActivity){
+
+                    lifecycleScope.launch {
+                        val temp = viewModel.isNewsScraped(it.newsUrl)
+                        Log.d("fecbbcb",it.newsUrl)
+                        Log.d("fecbbcb",temp.toString())
+                        if(temp>0){
+                            Toast.makeText(this@NewsDetailActivity, "이미 스크랩된 뉴스입니다.", Toast.LENGTH_SHORT).show()
+                        } else{
+                            Toast.makeText(this@NewsDetailActivity, "스크랩되었습니다", Toast.LENGTH_SHORT).show()
+                            viewModel.insertThisNews()
+                        }
+                    }
+                }
 
                 true
             }
@@ -95,6 +185,5 @@ class NewsDetailActivity : BaseActivity<NewsDetailViewModel, ActivityNewsDetailB
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 
 }

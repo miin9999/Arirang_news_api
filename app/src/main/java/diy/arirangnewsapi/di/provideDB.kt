@@ -9,4 +9,7 @@ fun provideDB(context: Context): ApplicationDatabase =
         .fallbackToDestructiveMigration()
         .build()
 
+
 fun provideNewsDao(database: ApplicationDatabase) = database.NewsDao()
+fun provideWordDao(database: ApplicationDatabase) = database.WordDao()
+

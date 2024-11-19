@@ -37,4 +37,11 @@ class DefaultNewsRepository(
     override suspend fun clearAllScrapedNews() = withContext(ioDispatcher) {
         newsDao.deleteAllNews()
     }
+
+
+    override suspend fun isNewsScraped(newsUrl: String):Int {
+        return newsDao.isNewsScrapped(newsUrl)
+    }
+
+
 }

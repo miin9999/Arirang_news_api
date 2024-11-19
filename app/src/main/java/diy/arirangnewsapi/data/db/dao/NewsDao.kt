@@ -17,7 +17,8 @@ interface NewsDao {
     @Query("SELECT * FROM NewsDetailEntity")
     fun getAllNews(): LiveData<List<NewsDetailEntity?>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertNews(newsDetailEntity: NewsDetailEntity)
 
     @Query("DELETE FROM NewsDetailEntity WHERE newsUrl=:newsUrl")
@@ -26,4 +27,8 @@ interface NewsDao {
 
     @Query("DELETE FROM NewsDetailEntity")
     suspend fun deleteAllNews()
+
+    @Query("SELECT COUNT(*) FROM NewsDetailEntity WHERE newsUrl = :newsUrl")
+    suspend fun isNewsScrapped(newsUrl: String): Int
+
 }

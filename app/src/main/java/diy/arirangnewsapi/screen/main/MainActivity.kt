@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
 
         initViews()
 
+
     }
 
 

@@ -24,4 +24,8 @@ interface NewsRepository {
     suspend fun clearAllScrapedNews()
 
 
+    suspend fun isNewsScraped(newsUrl: String):Int
+
+
+
 }

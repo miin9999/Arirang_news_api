@@ -41,6 +41,7 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
         recyclerViewAdapter.submitList(NewsDetailModel.toModel(it))
 
 
+
     }
 
     override fun initViews(){
