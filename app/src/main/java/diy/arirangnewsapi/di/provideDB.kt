@@ -10,3 +10,4 @@ fun provideDB(context: Context): ApplicationDatabase =
         .build()
 
 fun provideNewsDao(database: ApplicationDatabase) = database.NewsDao()
+fun provideWordDao(database: ApplicationDatabase) = database.WordDao()

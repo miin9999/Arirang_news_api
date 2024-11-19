@@ -11,6 +11,10 @@ properties.load(project.rootProject.file("local.properties").newDataInputStream(
 android {
     namespace 'diy.arirangnewsapi'
     compileSdk 34
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/DEPENDENCIES'
+    }
 
     defaultConfig {
         applicationId "diy.arirangnewsapi"
@@ -62,6 +66,9 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.6.1'
     kapt 'androidx.room:room-compiler:2.6.1'
     implementation 'androidx.room:room-ktx:2.6.1'
+
+    // Google Translation
+    implementation 'com.google.cloud:google-cloud-translate:2.0.2'
 
     //레트로핏
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

@@ -23,5 +23,7 @@ interface NewsRepository {
     // 스크랩된 뉴스 전체 삭제
     suspend fun clearAllScrapedNews()
 
+    suspend fun isNewsScraped(newsUrl: String):Int
+
 
 }
