@@ -5,7 +5,7 @@ import diy.arirangnewsapi.databinding.FragmentHomeBinding
 import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.screen.base.BaseFragment
 import diy.arirangnewsapi.screen.main.home.detail.NewsDetailActivity
-import diy.arirangnewsapi.widget.adapter.NewsAdapterOfHome
+import diy.arirangnewsapi.widget.adapter.news.NewsAdapterOfHome
 import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

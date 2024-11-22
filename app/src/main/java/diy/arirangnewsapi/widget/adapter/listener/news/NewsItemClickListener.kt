@@ -8,6 +8,6 @@ interface NewsItemClickListener: AdapterListener {
     fun onItemClick(newsDetailModel: NewsDetailModel){
     }
 
-    fun fdfdv(){}
+
 
 }

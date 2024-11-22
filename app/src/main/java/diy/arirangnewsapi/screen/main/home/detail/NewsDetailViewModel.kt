@@ -49,8 +49,6 @@ class NewsDetailViewModel(
             translatedWord = translation.translatedText
         )
 
-        Log.d("insertComplete", textToWordEntity.toString())
-
 
         val resultid = transRepository.insertWord(textToWordEntity)
         if(resultid != -1L){

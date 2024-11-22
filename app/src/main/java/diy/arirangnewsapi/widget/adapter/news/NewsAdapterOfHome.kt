@@ -1,4 +1,4 @@
-package diy.arirangnewsapi.widget.adapter
+package diy.arirangnewsapi.widget.adapter.news
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,7 +14,7 @@ import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 
 class NewsAdapterOfHome(
     private val listener : NewsItemClickListener
-): ListAdapter<NewsDetailModel,NewsAdapterOfHome.NewsViewHolder>(differ){
+): ListAdapter<NewsDetailModel, NewsAdapterOfHome.NewsViewHolder>(differ){
 
 
 

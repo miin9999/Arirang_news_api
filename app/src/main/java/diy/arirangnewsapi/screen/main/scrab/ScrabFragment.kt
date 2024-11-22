@@ -5,8 +5,7 @@ import diy.arirangnewsapi.databinding.FragmentScrabBinding
 import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.screen.base.BaseFragment
 import diy.arirangnewsapi.screen.main.scrab.detail.ScrapedNewsDetailActivity
-import diy.arirangnewsapi.widget.adapter.NewsAdapterOfHome
-import diy.arirangnewsapi.widget.adapter.NewsAdapterOfScrap
+import diy.arirangnewsapi.widget.adapter.news.NewsAdapterOfScrap
 import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,8 +25,6 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
             }
         })
     }
-
-
 
 
     override fun getViewBinding(): FragmentScrabBinding = FragmentScrabBinding.inflate(layoutInflater)

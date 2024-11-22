@@ -16,9 +16,6 @@ class MyWordViewModel(
 ): BaseViewModel() {
 
 
-    //todo 어쨌든 여기선 첫번째로, room에 있는 데이터를 가져와야 함
-    // 다른 기능은 나중에 생각
-
 
     val wordsFromRoom: LiveData<List<WordEntity?>> = transRepository.getAllWord()
 
