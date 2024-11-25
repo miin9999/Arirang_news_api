@@ -17,7 +17,12 @@ class ScrabViewModel(
 
 
     val scrapedFragmentLiveData: LiveData<List<NewsDetailEntity?>> = newsRepository.getAllScrapedNews()
+    var isRadioButtonsVisible = MutableLiveData(false)
 
+
+    fun toggleRadioButtonsVisibility() {
+        isRadioButtonsVisible.value = !(isRadioButtonsVisible.value ?: false)
+    }
 
     override fun fetchData(): Job = viewModelScope.launch {
 

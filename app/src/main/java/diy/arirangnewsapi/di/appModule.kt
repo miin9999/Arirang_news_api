@@ -6,9 +6,11 @@ import diy.arirangnewsapi.data.repository.News.DefaultNewsRepository
 import diy.arirangnewsapi.data.repository.News.NewsRepository
 import diy.arirangnewsapi.data.repository.Translation.DefaultTransRepository
 import diy.arirangnewsapi.data.repository.Translation.TransRepository
+import diy.arirangnewsapi.model.word.WordModel
 import diy.arirangnewsapi.screen.main.home.HomeViewModel
 import diy.arirangnewsapi.screen.main.home.detail.NewsDetailViewModel
 import diy.arirangnewsapi.screen.main.myword.MyWordViewModel
+import diy.arirangnewsapi.screen.main.myword.detail.WordDetailViewModel
 import diy.arirangnewsapi.screen.main.profile.ProfileViewModel
 import diy.arirangnewsapi.screen.main.scrab.ScrabViewModel
 import diy.arirangnewsapi.screen.main.scrab.detail.ScrabDetailViewModel
@@ -23,6 +25,7 @@ val appModule = module{
 
     viewModel{ HomeViewModel(get())}
     viewModel{ MyWordViewModel(get())}
+    viewModel{ (wordModel: WordModel) -> WordDetailViewModel(wordModel)}
     viewModel{ ProfileViewModel()}
     viewModel{ ScrabViewModel(get())}
     viewModel{ (newsDetailEntity:NewsDetailEntity)-> ScrabDetailViewModel(newsDetailEntity) }

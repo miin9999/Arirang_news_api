@@ -23,7 +23,13 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
                     )
                 )
             }
-        })
+
+            override fun onRemoveItemClick(newsDetailModel: NewsDetailModel) {
+
+            }
+
+
+        },viewModel)
     }
 
 
