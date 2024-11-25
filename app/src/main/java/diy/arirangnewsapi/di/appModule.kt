@@ -13,12 +13,14 @@ import diy.arirangnewsapi.screen.main.myword.MyWordViewModel
 import diy.arirangnewsapi.screen.main.myword.detail.WordDetailViewModel
 import diy.arirangnewsapi.screen.main.profile.ProfileViewModel
 import diy.arirangnewsapi.screen.main.scrab.ScrabViewModel
+import diy.arirangnewsapi.screen.main.scrab.SharedViewModel
 import diy.arirangnewsapi.screen.main.scrab.detail.ScrabDetailViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
 
 
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 
 val appModule = module{
@@ -30,6 +32,7 @@ val appModule = module{
     viewModel{ ScrabViewModel(get())}
     viewModel{ (newsDetailEntity:NewsDetailEntity)-> ScrabDetailViewModel(newsDetailEntity) }
     viewModel{ (newsDetailEntity:NewsDetailEntity) -> NewsDetailViewModel(newsDetailEntity,get(),get(),get(),get()) }
+    viewModel{ SharedViewModel(get())}
 
 
     single<NewsRepository>{ DefaultNewsRepository(get(),get(),get()) }

@@ -7,12 +7,15 @@ import diy.arirangnewsapi.screen.base.BaseFragment
 import diy.arirangnewsapi.screen.main.scrab.detail.ScrapedNewsDetailActivity
 import diy.arirangnewsapi.widget.adapter.news.NewsAdapterOfScrap
 import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
 
 
     override val viewModel by viewModel<ScrabViewModel>()
+
+    private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
     private val recyclerViewAdapter by lazy{
         NewsAdapterOfScrap(object : NewsItemClickListener{
@@ -29,7 +32,7 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
             }
 
 
-        },viewModel)
+        },sharedViewModel)
     }
 
 
@@ -44,12 +47,17 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
         recyclerViewAdapter.submitList(NewsDetailModel.toModel(it))
 
 
-
     }
+
+    fun radioButtonObserve()  = sharedViewModel.isRadioButtonsVisible.observe(viewLifecycleOwner){
+        recyclerViewAdapter.notifyDataSetChanged()
+    }
+
 
     override fun initViews(){
 
         binding.recyclerView.adapter = recyclerViewAdapter
+        radioButtonObserve()
 
     }
 

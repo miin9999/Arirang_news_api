@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import diy.arirangnewsapi.R
 import diy.arirangnewsapi.databinding.ActivityMainBinding
@@ -14,6 +17,9 @@ import diy.arirangnewsapi.screen.main.home.HomeFragment
 import diy.arirangnewsapi.screen.main.myword.MyWordFragment
 import diy.arirangnewsapi.screen.main.profile.ProfileFragment
 import diy.arirangnewsapi.screen.main.scrab.ScrabFragment
+import diy.arirangnewsapi.screen.main.scrab.SharedViewModel
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 @Suppress("DEPRECATION")
@@ -21,6 +27,8 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
 
 
     private lateinit var binding: ActivityMainBinding
+
+    private val sharedViewModel: SharedViewModel by viewModel()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +38,27 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
 
         initViews()
 
+
+    }
+
+
+    fun observeData()= sharedViewModel.isBottomNavVisible.observe(this@MainActivity){
+
+        if(it==false){
+            binding.bottomNav.visibility = View.GONE
+            binding.popupButtonContainer.visibility = View.VISIBLE
+        } else {
+            // 취소,삭제 버튼을 누를 시 버튼 원상복구
+            binding.bottomNav.visibility = View.VISIBLE
+            binding.popupButtonContainer.visibility = View.GONE
+
+        }
+
+
+    }
+
+
+    fun initButton()= with(binding){
 
     }
 
@@ -84,6 +113,22 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
 
         bottomNav.setOnNavigationItemSelectedListener(this@MainActivity)
         showFragment(HomeFragment.newInstance(),HomeFragment.TAG)
+        observeData()
+
+        deleteButton.setOnClickListener{
+            lifecycleScope.launch {
+                sharedViewModel.deleteSelectedItems()
+            }
+            sharedViewModel.toggleRadioAndBottomButtonsVisibility()
+
+        }
+
+        cancelButton.setOnClickListener {
+            sharedViewModel.toggleRadioAndBottomButtonsVisibility()
+        }
+
+
+
 
     }
 

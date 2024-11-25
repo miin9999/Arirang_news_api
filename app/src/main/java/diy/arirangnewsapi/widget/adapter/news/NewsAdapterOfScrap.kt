@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.databinding.NewsListScrapBinding
-import diy.arirangnewsapi.screen.main.scrab.ScrabViewModel
+import diy.arirangnewsapi.screen.main.scrab.SharedViewModel
 import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 
 
 class NewsAdapterOfScrap(
     private val listener : NewsItemClickListener,
-    private val viewModel: ScrabViewModel
+    private val viewModel: SharedViewModel
 ): ListAdapter<NewsDetailModel, NewsAdapterOfScrap.NewsViewHolder>(differ){
 
     inner class NewsViewHolder(
@@ -28,19 +28,31 @@ class NewsAdapterOfScrap(
 
             binding.titleTextView.text = newsModel.title
             binding.contentTextView.text = newsModel.content
+
+
             binding.root.setOnClickListener{
-                listener.onItemClick(newsModel)
+                val isRadioVisible = viewModel.isRadioButtonsVisible.value ?: false
+                if (isRadioVisible) {
+                    // 라디오 버튼이 보이는 상태라면, 라디오 버튼의 동작을 실행
+                    binding.radioButton.performClick()
+                } else {
+                    // 라디오 버튼이 보이지 않는 상태라면 원래 동작 실행
+                    listener.onItemClick(newsModel)
+                }
 
             }
 
             val isRadioVisible = viewModel.isRadioButtonsVisible.value ?: false
             binding.radioButton.visibility = if (isRadioVisible) View.VISIBLE else View.GONE
 
+            binding.radioButton.setOnClickListener{
+                viewModel.toggleItemSelection(newsModel)
+            }
+
             // 아이템을 길게 눌렀을 때 라디오 버튼을 보이도록 처리
             binding.root.setOnLongClickListener {
                 // 모든 아이템의 라디오 버튼을 보이게 하기 위해 ViewModel의 상태 변경
-                viewModel.toggleRadioButtonsVisibility()
-                notifyDataSetChanged() // 전체 아이템을 다시 그리게 함
+                viewModel.toggleRadioAndBottomButtonsVisibility()
                 true
             }
 

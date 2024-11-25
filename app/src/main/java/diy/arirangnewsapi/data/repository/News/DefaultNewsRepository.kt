@@ -38,6 +38,9 @@ class DefaultNewsRepository(
         newsDao.deleteAllNews()
     }
 
+    override suspend fun deleteSelectedNews(newsUrls: List<String>) {
+        newsDao.deleteSelectedNews(newsUrls)
+    }
 
     override suspend fun isNewsScraped(newsUrl: String):Int {
         return newsDao.isNewsScrapped(newsUrl)

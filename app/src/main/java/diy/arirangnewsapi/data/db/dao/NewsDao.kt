@@ -24,6 +24,9 @@ interface NewsDao {
     @Query("DELETE FROM NewsDetailEntity WHERE newsUrl=:newsUrl")
     suspend fun deleteOneNews(newsUrl: String)
 
+    @Query("DELETE FROM NewsDetailEntity WHERE newsUrl IN (:urls)")
+    suspend fun deleteSelectedNews(urls: List<String>)
+
 
     @Query("DELETE FROM NewsDetailEntity")
     suspend fun deleteAllNews()
