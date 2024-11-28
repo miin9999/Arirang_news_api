@@ -7,8 +7,8 @@
     android:layout_height="wrap_content"
     android:padding="16dp">
 
-    <android.widget.RadioButton
-        android:id="@+id/radio_button"
+    <CheckBox
+        android:id="@+id/checkBox"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:background="@drawable/background_gray_stroke_radius_16"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/radio_button"
+        app:layout_constraintStart_toEndOf="@id/checkBox"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

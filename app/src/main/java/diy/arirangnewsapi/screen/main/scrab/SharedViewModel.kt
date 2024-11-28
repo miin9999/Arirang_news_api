@@ -1,8 +1,8 @@
 package diy.arirangnewsapi.screen.main.scrab
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import diy.arirangnewsapi.data.repository.News.NewsRepository
 import diy.arirangnewsapi.model.news.NewsDetailModel
 
@@ -11,15 +11,15 @@ class SharedViewModel(
 ) : ViewModel() {
 
 
-    val isRadioButtonsVisible = MutableLiveData(false) // 라디오 버튼 보임 여부
-    val selectedItems = MutableLiveData<MutableList<NewsDetailModel>>(mutableListOf())
-    val isBottomNavVisible = MutableLiveData(true) // 바텀 내비게이션 보임 여부
+    val isCheckBoxVisible = MutableLiveData(false) // 라디오 버튼 보임 여부
+    val selectedItems = MutableLiveData<MutableList<NewsDetailModel>?>(mutableListOf())
+    //val isBottomNavVisible = MutableLiveData(true) // 바텀 내비게이션 보임 여부
 
 
     // 라디오 버튼, 바텀 버튼 토글
-    fun toggleRadioAndBottomButtonsVisibility() {
-        isRadioButtonsVisible.value = !(isRadioButtonsVisible.value ?: false)
-        isBottomNavVisible.value = !(isRadioButtonsVisible.value ?: false)
+    fun toggleCheckBoxVisibility() {
+        isCheckBoxVisible.value = !(isCheckBoxVisible.value ?: false)
+        //isBottomNavVisible.value = !(isCheckBoxVisible.value ?: false)
     }
 
     // 아이템 선택 추가/제거
@@ -31,21 +31,25 @@ class SharedViewModel(
             currentList.add(item)
         }
         selectedItems.value = currentList
+
+        Log.d("currentListSelected", selectedItems.value.toString())
     }
 
     // 삭제 로직
     suspend fun deleteSelectedItems() {
+        // 선택된 아이템들의 url(primary key)를 따옴
         val selectedUrls = selectedItems.value?.map{
             it.newsUrl
         } ?: emptyList()
 
         newsRepository.deleteSelectedNews(selectedUrls)
+        selectedItems.value?.clear()
 
     }
 
     // 취소 로직
     fun cancelSelection() {
         selectedItems.value = mutableListOf()
-        isRadioButtonsVisible.value = false
+        isCheckBoxVisible.value = false
     }
 }

@@ -9,6 +9,9 @@ import diy.arirangnewsapi.widget.adapter.news.NewsAdapterOfScrap
 import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import android.view.ActionMode
+import diy.arirangnewsapi.screen.main.MainActivity
+
 
 class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
 
@@ -25,6 +28,10 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
                         requireContext(),newsDetailModel.toEntity()
                     )
                 )
+            }
+
+            override fun onLongItemClick(newsDetailModel: NewsDetailModel) {
+                (activity as? MainActivity)?.startActionMode()
             }
 
             override fun onRemoveItemClick(newsDetailModel: NewsDetailModel) {
@@ -49,7 +56,7 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
 
     }
 
-    fun radioButtonObserve()  = sharedViewModel.isRadioButtonsVisible.observe(viewLifecycleOwner){
+    fun checkBoxObserve()  = sharedViewModel.isCheckBoxVisible.observe(viewLifecycleOwner){
         recyclerViewAdapter.notifyDataSetChanged()
     }
 
@@ -57,7 +64,8 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
     override fun initViews(){
 
         binding.recyclerView.adapter = recyclerViewAdapter
-        radioButtonObserve()
+        checkBoxObserve()
+
 
     }
 
@@ -67,6 +75,8 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
 
         const val TAG = "ScrabFragment"
     }
+
+
 
 
 }

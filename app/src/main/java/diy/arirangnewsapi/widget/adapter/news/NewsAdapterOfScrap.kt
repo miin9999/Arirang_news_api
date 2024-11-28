@@ -30,31 +30,37 @@ class NewsAdapterOfScrap(
             binding.contentTextView.text = newsModel.content
 
 
-            binding.root.setOnClickListener{
-                val isRadioVisible = viewModel.isRadioButtonsVisible.value ?: false
-                if (isRadioVisible) {
-                    // 라디오 버튼이 보이는 상태라면, 라디오 버튼의 동작을 실행
-                    binding.radioButton.performClick()
+            binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    // 체크박스를 체크한 경우
+                    viewModel.toggleItemSelection(newsModel)
                 } else {
-                    // 라디오 버튼이 보이지 않는 상태라면 원래 동작 실행
+                    // 체크박스를 체크 해제한 경우
+                    viewModel.toggleItemSelection(newsModel)
+                }
+            }
+
+
+            binding.root.setOnClickListener {
+                val isCheckBoxVisible = viewModel.isCheckBoxVisible.value ?: false
+                if (isCheckBoxVisible) {
+                    // 체크박스가 보이면 체크박스를 클릭하는 동작
+                    binding.checkBox.performClick()
+                } else {
+                    // 원래의 아이템 클릭 동작
                     listener.onItemClick(newsModel)
                 }
-
             }
-
-            val isRadioVisible = viewModel.isRadioButtonsVisible.value ?: false
-            binding.radioButton.visibility = if (isRadioVisible) View.VISIBLE else View.GONE
-
-            binding.radioButton.setOnClickListener{
-                viewModel.toggleItemSelection(newsModel)
-            }
-
-            // 아이템을 길게 눌렀을 때 라디오 버튼을 보이도록 처리
             binding.root.setOnLongClickListener {
-                // 모든 아이템의 라디오 버튼을 보이게 하기 위해 ViewModel의 상태 변경
-                viewModel.toggleRadioAndBottomButtonsVisibility()
+                // ViewModel의 상태를 변경하여 체크박스 표시
+                viewModel.toggleCheckBoxVisibility()
+                listener.onLongItemClick(newsModel)
                 true
             }
+
+            val isCheckBoxVisible = viewModel.isCheckBoxVisible.value ?: false
+            binding.checkBox.visibility = if (isCheckBoxVisible) View.VISIBLE else View.GONE
+
 
             Glide
                 .with(binding.coverImageView.context)

@@ -9,6 +9,8 @@ interface NewsItemClickListener: AdapterListener {
 
     fun onRemoveItemClick(newsDetailModel: NewsDetailModel)
 
+    fun onLongItemClick(newsDetailModel: NewsDetailModel)
+
 
 
 }
