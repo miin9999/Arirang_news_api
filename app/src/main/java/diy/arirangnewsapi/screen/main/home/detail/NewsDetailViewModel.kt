@@ -8,17 +8,16 @@ import com.google.cloud.translate.Translate
 import diy.arirangnewsapi.data.entity.NewsDetailEntity
 import diy.arirangnewsapi.data.entity.WordEntity
 import diy.arirangnewsapi.data.repository.News.NewsRepository
-import diy.arirangnewsapi.data.repository.Translation.TransRepository
+import diy.arirangnewsapi.data.repository.Translation.WordRepository
 import diy.arirangnewsapi.screen.base.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
 class NewsDetailViewModel(
     private val newsDetailEntity: NewsDetailEntity,
     private val newsRepository: NewsRepository,
-    private val transRepository: TransRepository,
+    private val wordRepository: WordRepository,
     private val translateService: Translate,
     private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
@@ -50,7 +49,7 @@ class NewsDetailViewModel(
         )
 
 
-        val resultid = transRepository.insertWord(textToWordEntity)
+        val resultid = wordRepository.insertWord(textToWordEntity)
         if(resultid != -1L){
             Log.d("insertComplete", resultid.toString())
             Log.d("insertComplete", "succc")

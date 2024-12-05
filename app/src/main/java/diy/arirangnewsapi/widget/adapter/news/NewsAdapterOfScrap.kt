@@ -33,16 +33,16 @@ class NewsAdapterOfScrap(
             binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     // 체크박스를 체크한 경우
-                    viewModel.toggleItemSelection(newsModel)
+                    viewModel.toggleNewsSelection(newsModel)
                 } else {
                     // 체크박스를 체크 해제한 경우
-                    viewModel.toggleItemSelection(newsModel)
+                    viewModel.toggleNewsSelection(newsModel)
                 }
             }
 
 
             binding.root.setOnClickListener {
-                val isCheckBoxVisible = viewModel.isCheckBoxVisible.value ?: false
+                val isCheckBoxVisible = viewModel.isCheckBoxVisibleOfScrapedNews.value ?: false
                 if (isCheckBoxVisible) {
                     // 체크박스가 보이면 체크박스를 클릭하는 동작
                     binding.checkBox.performClick()
@@ -53,12 +53,12 @@ class NewsAdapterOfScrap(
             }
             binding.root.setOnLongClickListener {
                 // ViewModel의 상태를 변경하여 체크박스 표시
-                viewModel.toggleCheckBoxVisibility()
+                viewModel.toggleCheckBoxVisibilityOfScrap()
                 listener.onLongItemClick(newsModel)
                 true
             }
 
-            val isCheckBoxVisible = viewModel.isCheckBoxVisible.value ?: false
+            val isCheckBoxVisible = viewModel.isCheckBoxVisibleOfScrapedNews.value ?: false
             binding.checkBox.visibility = if (isCheckBoxVisible) View.VISIBLE else View.GONE
 
 

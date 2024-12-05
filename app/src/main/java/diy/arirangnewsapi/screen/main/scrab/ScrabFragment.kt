@@ -9,7 +9,6 @@ import diy.arirangnewsapi.widget.adapter.news.NewsAdapterOfScrap
 import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.view.ActionMode
 import diy.arirangnewsapi.screen.main.MainActivity
 
 
@@ -43,6 +42,10 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
     }
 
 
+
+
+
+
     override fun getViewBinding(): FragmentScrabBinding = FragmentScrabBinding.inflate(layoutInflater)
 
     override fun observeData() = viewModel.scrapedFragmentLiveData.observe(viewLifecycleOwner){
@@ -56,8 +59,9 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
 
     }
 
-    fun checkBoxObserve()  = sharedViewModel.isCheckBoxVisible.observe(viewLifecycleOwner){
+    fun checkBoxObserve()  = sharedViewModel.isCheckBoxVisibleOfScrapedNews.observe(viewLifecycleOwner){
         recyclerViewAdapter.notifyDataSetChanged()
+        Log.d("isCheckBoxVisible",it.toString())
     }
 
 

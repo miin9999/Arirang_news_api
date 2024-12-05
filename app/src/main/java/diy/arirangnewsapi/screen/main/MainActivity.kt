@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -17,9 +16,7 @@ import diy.arirangnewsapi.screen.main.myword.MyWordFragment
 import diy.arirangnewsapi.screen.main.profile.ProfileFragment
 import diy.arirangnewsapi.screen.main.scrab.ScrabFragment
 import diy.arirangnewsapi.screen.main.scrab.SharedViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -44,30 +41,6 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
 
 
     }
-
-
-//    fun observeData()= sharedViewModel.isCheckBoxVisible.observe(this@MainActivity){
-//
-//        if(it==false){
-//            binding.bottomNav.visibility = View.GONE
-//            binding.popupButtonContainer.visibility = View.VISIBLE
-//        } else {
-//            // 취소,삭제 버튼을 누를 시 버튼 원상복구
-//            binding.bottomNav.visibility = View.VISIBLE
-//            binding.popupButtonContainer.visibility = View.GONE
-//
-//        }
-//
-//
-//    }
-
-
-    fun initButton()= with(binding){
-
-    }
-
-
-
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -123,14 +96,14 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
 
         deleteButton.setOnClickListener{
             lifecycleScope.launch {
-                sharedViewModel.deleteSelectedItems()
+                sharedViewModel.deleteSelectedNews()
             }
-            sharedViewModel.toggleCheckBoxVisibility()
+            sharedViewModel.toggleCheckBoxVisibilityOfScrap()
 
         }
 
         cancelButton.setOnClickListener {
-            sharedViewModel.toggleCheckBoxVisibility()
+            sharedViewModel.toggleCheckBoxVisibilityOfScrap()
         }
 
 
@@ -153,14 +126,15 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
             when (item?.itemId) {
 
                 1 -> {
-                    // 삭제 버튼 누를 시
+
+                    val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
                     lifecycleScope.launch {
-                        withContext(Dispatchers.IO){
-                            sharedViewModel.deleteSelectedItems()
+                        when (currentFragment) {
+                            is ScrabFragment -> sharedViewModel.deleteSelectedNews()
+                            is MyWordFragment -> sharedViewModel.deleteSelectedWord()
                         }
                     }
 
-                    sharedViewModel.toggleCheckBoxVisibility()
                     mode?.finish()  // 액션 모드 종료
                     return true
                 }
@@ -170,7 +144,12 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
 
         override fun onDestroyActionMode(mode: ActionMode?) {
             // 액션 모드 종료 시 처리
-            sharedViewModel.toggleCheckBoxVisibility()
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+            when (currentFragment) {
+                is ScrabFragment -> sharedViewModel.toggleCheckBoxVisibilityOfScrap()
+                is MyWordFragment -> sharedViewModel.toggleCheckBoxVisibilityOfMyWord()
+            }
+
         }
 
         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {

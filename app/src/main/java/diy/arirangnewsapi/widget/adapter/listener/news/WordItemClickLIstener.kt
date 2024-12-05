@@ -6,4 +6,6 @@ import diy.arirangnewsapi.widget.adapter.listener.AdapterListener
 interface WordItemClickLIstener: AdapterListener{
 
     fun onWordItemClick(wordModel: WordModel)
+
+    fun onWordItemLongClick(wordModel: WordModel)
 }

@@ -2,17 +2,16 @@ package diy.arirangnewsapi.data.repository.Translation
 
 
 import androidx.lifecycle.LiveData
-import com.google.cloud.translate.Translate
 import diy.arirangnewsapi.data.db.dao.WordDao
 import diy.arirangnewsapi.data.entity.WordEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 
-class DefaultTransRepository(
+class DefaultWordRepository(
     private val ioDispatcher: CoroutineDispatcher,
     private val wordDao: WordDao
-):TransRepository {
+):WordRepository {
 
 
     override suspend fun insertWord(text: WordEntity):Long = withContext(ioDispatcher){
@@ -20,7 +19,11 @@ class DefaultTransRepository(
     }
 
     override fun getAllWord(): LiveData<List<WordEntity?>> = wordDao.getAllWords()
-    //override fun getAllWord(): LiveData<List<WordEntity?>> = wordDao.getAllWords()
+
+
+    override suspend fun deleteSelectedWords(id: List<Long?>) = withContext(ioDispatcher){
+        wordDao.deleteSelectedNews(id)
+    }
 
 
 }

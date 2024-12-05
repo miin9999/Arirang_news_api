@@ -25,6 +25,9 @@ interface WordDao {
     @Query("DELETE FROM WordEntity")
     suspend fun deleteAllWord()
 
+    @Query("DELETE FROM WordEntity WHERE id IN (:id)")
+    suspend fun deleteSelectedNews(id:List<Long?>)
+
     @Query("SELECT COUNT(*) FROM WordEntity WHERE id =:id")
     suspend fun isWordScrapped(id: Long): Int
 }
