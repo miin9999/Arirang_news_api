@@ -1,6 +1,11 @@
 package diy.arirangnewsapi.screen.main.scrab
 
 import android.util.Log
+
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.view.ActionMode
+import androidx.lifecycle.lifecycleScope
 import diy.arirangnewsapi.databinding.FragmentScrabBinding
 import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.screen.base.BaseFragment
@@ -10,14 +15,17 @@ import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import diy.arirangnewsapi.screen.main.MainActivity
+import kotlinx.coroutines.launch
 
 
-class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
+class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>(), ActionMode.Callback {
 
 
     override val viewModel by viewModel<ScrabViewModel>()
 
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
+
+    private var actionMode: ActionMode? = null
 
     private val recyclerViewAdapter by lazy{
         NewsAdapterOfScrap(object : NewsItemClickListener{
@@ -30,7 +38,7 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
             }
 
             override fun onLongItemClick(newsDetailModel: NewsDetailModel) {
-                (activity as? MainActivity)?.startActionMode()
+                (activity as? MainActivity)?.startActionMode(this@ScrabFragment)
             }
 
             override fun onRemoveItemClick(newsDetailModel: NewsDetailModel) {
@@ -80,7 +88,51 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>() {
         const val TAG = "ScrabFragment"
     }
 
+    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
 
+        menu?.add(Menu.NONE, 1, Menu.NONE, "삭제")
+        sharedViewModel.setActionModeActive(true)
+        return true
+    }
+
+    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+
+        // selectedNews 값에 따라 삭제 버튼의 가시성 조정
+        val selectedNewsCount = sharedViewModel.selectedNews.value?.size ?: 0
+        val deleteItem = menu?.findItem(1)
+
+        // 선택된 뉴스가 있을 때만 삭제 버튼을 보이도록
+        deleteItem?.isVisible = selectedNewsCount > 0
+
+        return true
+    }
+
+    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            1 -> {
+                // 선택된 단어 삭제
+                lifecycleScope.launch {
+                    sharedViewModel.deleteSelectedNews()
+                    mode?.finish()
+                }
+                 // 액션 모드 종료
+                return true
+            }
+        }
+        return false
+    }
+
+    override fun onDestroyActionMode(mode: ActionMode?) {
+        actionMode = null
+        sharedViewModel.setActionModeActive(false)
+        sharedViewModel.selectedNews.value = mutableListOf()
+        sharedViewModel.toggleCheckBoxVisibilityOfScrap()
+
+
+
+
+
+    }
 
 
 }

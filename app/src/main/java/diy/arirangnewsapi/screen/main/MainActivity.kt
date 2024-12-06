@@ -2,10 +2,10 @@ package diy.arirangnewsapi.screen.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ActionMode
-import android.view.Menu
+import android.util.Log
 import android.view.MenuItem
 import androidx.annotation.IdRes
+import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -16,6 +16,7 @@ import diy.arirangnewsapi.screen.main.myword.MyWordFragment
 import diy.arirangnewsapi.screen.main.profile.ProfileFragment
 import diy.arirangnewsapi.screen.main.scrab.ScrabFragment
 import diy.arirangnewsapi.screen.main.scrab.SharedViewModel
+
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,14 +37,17 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initViews()
 
+        initViews()
 
 
     }
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        actionMode?.finish()
+
         return when(item.itemId){
             R.id.menu_home ->{
                 showFragment(HomeFragment.newInstance(),HomeFragment.TAG)
@@ -91,8 +95,9 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
     private fun initViews() = with(binding){
 
         bottomNav.setOnNavigationItemSelectedListener(this@MainActivity)
+
+
         showFragment(HomeFragment.newInstance(),HomeFragment.TAG)
-        //observeData()
 
         deleteButton.setOnClickListener{
             lifecycleScope.launch {
@@ -105,58 +110,18 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
         cancelButton.setOnClickListener {
             sharedViewModel.toggleCheckBoxVisibilityOfScrap()
         }
-
-
-
-
     }
 
-    fun startActionMode() {
-        actionMode = startActionMode(actionModeCallback)
+    fun startActionMode(fragment: Fragment) {
+        (fragment as? ActionMode.Callback)?.let { callback ->
+            actionMode = startSupportActionMode(callback)
+            sharedViewModel.setActionMode(actionMode)
+
+        }
     }
 
 
-    private val actionModeCallback = object : ActionMode.Callback {
-        override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-            menu?.add(Menu.NONE, 1, Menu.NONE, "삭제")
-            return true
-        }
 
-        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-            when (item?.itemId) {
-
-                1 -> {
-
-                    val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
-                    lifecycleScope.launch {
-                        when (currentFragment) {
-                            is ScrabFragment -> sharedViewModel.deleteSelectedNews()
-                            is MyWordFragment -> sharedViewModel.deleteSelectedWord()
-                        }
-                    }
-
-                    mode?.finish()  // 액션 모드 종료
-                    return true
-                }
-            }
-            return false
-        }
-
-        override fun onDestroyActionMode(mode: ActionMode?) {
-            // 액션 모드 종료 시 처리
-            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
-            when (currentFragment) {
-                is ScrabFragment -> sharedViewModel.toggleCheckBoxVisibilityOfScrap()
-                is MyWordFragment -> sharedViewModel.toggleCheckBoxVisibilityOfMyWord()
-            }
-
-        }
-
-        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-            // 액션 모드 준비 시 처리
-            return false
-        }
-    }
 
 
 }

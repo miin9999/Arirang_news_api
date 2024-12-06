@@ -1,6 +1,8 @@
 package diy.arirangnewsapi.screen.main.scrab
 
 import android.util.Log
+import androidx.appcompat.view.ActionMode
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,7 +28,20 @@ class SharedViewModel(
     val selectedNews = MutableLiveData<MutableList<NewsDetailModel>?>(mutableListOf())
     val selectedWords = MutableLiveData<MutableList<WordModel>?>(mutableListOf())
 
+    private val _isActionModeActive = MutableLiveData<Boolean>(false)
+    val isActionModeActive: LiveData<Boolean> = _isActionModeActive
 
+    private val _actionMode = MutableLiveData<ActionMode?>()
+    val actionMode: LiveData<ActionMode?> = _actionMode
+
+
+    fun setActionMode(mode: ActionMode?) {
+        _actionMode.value = mode
+    }
+
+    fun setActionModeActive(isActive: Boolean) {
+        _isActionModeActive.value = isActive
+    }
 
 
 
@@ -34,12 +49,14 @@ class SharedViewModel(
     fun toggleCheckBoxVisibilityOfScrap() {
         isCheckBoxVisibleOfScrapedNews.value = !(isCheckBoxVisibleOfScrapedNews.value ?: false)
         //isBottomNavVisible.value = !(isCheckBoxVisible.value ?: false)
+        Log.d("scraptoggle",isCheckBoxVisibleOfScrapedNews.value.toString())
     }
 
     fun toggleCheckBoxVisibilityOfMyWord(){
         // 체크 박스와 이미지 뷰 토글
         isCheckBoxVisibleOfMyWords.value = !(isCheckBoxVisibleOfMyWords.value ?: false)
         isImageViewVisible.value = !(isImageViewVisible.value ?: false)
+        Log.d("imageviewtoggle",isImageViewVisible.value.toString())
     }
 
 
@@ -54,7 +71,7 @@ class SharedViewModel(
         }
         selectedNews.value = currentList
 
-        Log.d("currentListSelected", selectedNews.value.toString())
+        Log.d("currentListSelectedNews", selectedNews.value.toString())
     }
 
     fun toggleWordSelection(item: WordModel) {
@@ -66,7 +83,7 @@ class SharedViewModel(
         }
         selectedWords.value = currentList
 
-        Log.d("currentListSelected", selectedWords.value.toString())
+        Log.d("currentListSelectedWord", selectedWords.value.toString())
     }
 
 
@@ -74,12 +91,12 @@ class SharedViewModel(
     // 삭제 로직
     suspend fun deleteSelectedNews() {
         // 선택된 아이템들의 url(primary key)를 따옴
+        val selectedUrls = selectedNews.value?.map {
+            it.newsUrl
+        } ?: emptyList()
+
         viewModelScope.launch {
             withContext(ioDispatcher) {
-                val selectedUrls = selectedNews.value?.map {
-                    it.newsUrl
-                } ?: emptyList()
-
                 newsRepository.deleteSelectedNews(selectedUrls)
                 selectedNews.value?.clear()
             }
@@ -89,11 +106,11 @@ class SharedViewModel(
 
     suspend fun deleteSelectedWord() {
         viewModelScope.launch {
-            withContext(ioDispatcher) {
-                val selectedID = selectedWords.value?.map {
-                    it.id
-                } ?: emptyList()
+            val selectedID = selectedWords.value?.map {
+                it.id
+            } ?: emptyList()
 
+            withContext(ioDispatcher) {
                 wordRepository.deleteSelectedWords(selectedID)
                 selectedWords.value?.clear()
 

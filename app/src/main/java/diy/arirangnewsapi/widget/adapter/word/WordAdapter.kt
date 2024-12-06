@@ -28,8 +28,13 @@ class WordAdapter(
 
         fun bind(wordModel: WordModel){
 
+
+
             Log.d("adapterBind","meeseses")
             binding.outSideTitleTextView.text = wordModel.originalWord
+
+            binding.checkBox.setOnCheckedChangeListener(null)
+            binding.checkBox.isChecked = false
 
             binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
@@ -39,6 +44,8 @@ class WordAdapter(
                     // 체크박스를 체크 해제한 경우
                     viewModel.toggleWordSelection(wordModel)
                 }
+
+                viewModel.actionMode.value?.invalidate()
             }
 
             binding.root.setOnClickListener {
@@ -57,6 +64,7 @@ class WordAdapter(
                 // ViewModel의 상태를 변경하여 체크박스 표시
                 viewModel.toggleCheckBoxVisibilityOfMyWord()
                 listener.onWordItemLongClick(wordModel)
+
                 true
             }
 

@@ -29,6 +29,8 @@ class NewsAdapterOfScrap(
             binding.titleTextView.text = newsModel.title
             binding.contentTextView.text = newsModel.content
 
+            binding.checkBox.setOnCheckedChangeListener(null)
+            binding.checkBox.isChecked = false
 
             binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
@@ -38,6 +40,9 @@ class NewsAdapterOfScrap(
                     // 체크박스를 체크 해제한 경우
                     viewModel.toggleNewsSelection(newsModel)
                 }
+
+
+                viewModel.actionMode.value?.invalidate()
             }
 
 
@@ -52,6 +57,14 @@ class NewsAdapterOfScrap(
                 }
             }
             binding.root.setOnLongClickListener {
+
+                // 액션 모드가 활성화된 경우 롱클릭을 무시
+                viewModel.isActionModeActive.value?.let { isActionModeActive ->
+                    if (isActionModeActive) {
+                        return@setOnLongClickListener false
+                    }
+                }
+
                 // ViewModel의 상태를 변경하여 체크박스 표시
                 viewModel.toggleCheckBoxVisibilityOfScrap()
                 listener.onLongItemClick(newsModel)

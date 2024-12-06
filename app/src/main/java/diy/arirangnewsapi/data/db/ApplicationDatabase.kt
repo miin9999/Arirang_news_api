@@ -10,7 +10,7 @@ import diy.arirangnewsapi.data.entity.WordEntity
 
 @Database(
     entities =[NewsDetailEntity::class, WordEntity::class],
-    version = 2,
+    version = 1,
     exportSchema = false
 )
 abstract class ApplicationDatabase:RoomDatabase() {
