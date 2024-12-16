@@ -25,5 +25,9 @@ class DefaultWordRepository(
         wordDao.deleteSelectedNews(id)
     }
 
+    override suspend fun getRandomOneWord(): WordEntity? = withContext(ioDispatcher){
+        wordDao.getOneWord()
+    }
+
 
 }

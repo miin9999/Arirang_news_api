@@ -129,9 +129,6 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>(), Action
         sharedViewModel.toggleCheckBoxVisibilityOfScrap()
 
 
-
-
-
     }
 
 

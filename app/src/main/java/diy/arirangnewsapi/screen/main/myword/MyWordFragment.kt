@@ -54,7 +54,7 @@ class MyWordFragment:BaseFragment<MyWordViewModel,FragmentMywordBinding>(), Acti
     override fun observeData() = viewModel.wordsFromRoom.observe(viewLifecycleOwner){
 
         it.map{
-            Log.d("wordList",it?.translatedWord.toString())
+            Log.d("wordList",it?.originalWord.toString())
         }
 
         recyclerViewAdapter.submitList(WordModel.toModel(it))

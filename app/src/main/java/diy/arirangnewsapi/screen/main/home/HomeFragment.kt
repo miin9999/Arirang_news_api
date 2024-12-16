@@ -30,6 +30,10 @@ class HomeFragment: BaseFragment<HomeViewModel,FragmentHomeBinding>() {
             override fun onRemoveItemClick(newsDetailModel: NewsDetailModel) {
             }
 
+            override fun onLongItemClick(newsDetailModel: NewsDetailModel) {
+
+            }
+
         })
     }
 

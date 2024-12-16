@@ -1,7 +1,12 @@
 package diy.arirangnewsapi.screen.main
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.MenuItem
 import androidx.annotation.IdRes
@@ -13,9 +18,10 @@ import diy.arirangnewsapi.R
 import diy.arirangnewsapi.databinding.ActivityMainBinding
 import diy.arirangnewsapi.screen.main.home.HomeFragment
 import diy.arirangnewsapi.screen.main.myword.MyWordFragment
-import diy.arirangnewsapi.screen.main.profile.ProfileFragment
+import diy.arirangnewsapi.screen.main.profile.TodayWordFragment
 import diy.arirangnewsapi.screen.main.scrab.ScrabFragment
 import diy.arirangnewsapi.screen.main.scrab.SharedViewModel
+import diy.arirangnewsapi.util.data_update_receiver.DataUpdateReceiver
 
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -39,8 +45,35 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
 
 
         initViews()
+        setupAlarm()
 
 
+    }
+    private fun setupAlarm() {
+
+
+        Log.d("alarm Main","setupAlarm")
+
+
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, DataUpdateReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        // 15분 간격 반복 (밀리초 단위)
+        val interval = 10000L //15 * 60 * 1000L
+        val triggerAtMillis = SystemClock.elapsedRealtime() + interval
+
+        alarmManager.setRepeating(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            triggerAtMillis,
+            interval,
+            pendingIntent
+        )
     }
 
 
@@ -64,7 +97,7 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
                 true
             }
             R.id.menu_profile ->{
-                showFragment(ProfileFragment.newInstance(),ProfileFragment.TAG)
+                showFragment(TodayWordFragment.newInstance(),TodayWordFragment.TAG)
 
                 true
             }

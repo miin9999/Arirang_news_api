@@ -49,6 +49,8 @@ class NewsDetailViewModel(
         )
 
 
+
+
         val resultid = wordRepository.insertWord(textToWordEntity)
         if(resultid != -1L){
             Log.d("insertComplete", resultid.toString())
