@@ -24,7 +24,7 @@ class NewsDetailViewModel(
 
 
 
-    // 디테일 액티티비니까 어차피 데이터는 한 가지만 들어옴
+    // 디테일 액티비티니까 어차피 데이터는 한 가지만 들어옴
     // 현재 내가 보고 있는 뉴스의 데이터만 있는 상태
 
 
@@ -51,12 +51,12 @@ class NewsDetailViewModel(
 
 
 
-        val resultid = wordRepository.insertWord(textToWordEntity)
-        if(resultid != -1L){
-            Log.d("insertComplete", resultid.toString())
+        val resultId = wordRepository.insertWord(textToWordEntity)
+        if(resultId != -1L){
+            Log.d("insertComplete", resultId.toString())
             Log.d("insertComplete", "succc")
         }else{
-            Log.d("insertComplete", resultid.toString())
+            Log.d("insertComplete", resultId.toString())
             Log.d("insertComplete", "fail")
         }
 

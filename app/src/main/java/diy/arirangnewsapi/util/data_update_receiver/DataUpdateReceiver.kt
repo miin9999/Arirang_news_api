@@ -16,26 +16,31 @@ import org.koin.java.KoinJavaComponent.inject
 
 class DataUpdateReceiver : BroadcastReceiver() {
 
+
     override fun onReceive(context: Context, intent: Intent?) {
-        Log.d("alarm Receiver", "starts")
+        Log.d("alarmReceiver", "starts")
 
         val viewModel = getKoin().get<TodayWordViewModel>()
         val wordDao = getKoin().get<WordDao>()
+        val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
         CoroutineScope(Dispatchers.IO).launch{
             val newData = wordDao.getOneWord()
-            val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-            Log.d("CoroutineScope",newData.toString())
-            sharedPreferences.edit().putString("latest_data", newData?.originalWord).apply()
+
+            Log.d("CoroutineScope", newData.toString())
+            sharedPreferences.edit()
+                .putString(ORIGINAL_KEY, newData?.originalWord)
+                .putString(TRANSLATED_KEY, newData?.translatedWord)
+                .apply()
+
         }
 
 
-//        CoroutineScope(Dispatchers.IO).launch {
-//            viewModel.fetchDataFromRoom()
-//
-//        }
+    }
 
-
+    companion object{
+        const val ORIGINAL_KEY = "ORIGINAL_WORD_KEY"
+        const val TRANSLATED_KEY = "TRANSLATED_WORD_KEY"
 
     }
 }

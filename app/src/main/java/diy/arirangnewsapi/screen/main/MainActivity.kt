@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
         )
 
         // 15분 간격 반복 (밀리초 단위)
-        val interval = 10000L //15 * 60 * 1000L
+        val interval = 60 * 1000L //15 * 60 * 1000L = 15분
         val triggerAtMillis = SystemClock.elapsedRealtime() + interval
 
         alarmManager.setRepeating(

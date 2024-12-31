@@ -97,11 +97,11 @@ class NewsDetailActivity : BaseActivity<NewsDetailViewModel, ActivityNewsDetailB
             }
 
             override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean {
-                return true
+                return false
             }
 
             override fun onActionItemClicked(p0: ActionMode?, p1: MenuItem?): Boolean {
-                return true
+                return false
             }
 
             override fun onDestroyActionMode(p0: ActionMode?) {
@@ -112,11 +112,7 @@ class NewsDetailActivity : BaseActivity<NewsDetailViewModel, ActivityNewsDetailB
     }
 
     suspend fun addToVocabulary(textThatIWantToTranslate: String) {
-        //todo 번역 후, room에 저장
-
         viewModel.addButtonToVoca(textThatIWantToTranslate)
-
-
     }
 
 

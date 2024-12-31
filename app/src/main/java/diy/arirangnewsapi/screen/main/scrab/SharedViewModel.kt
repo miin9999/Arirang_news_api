@@ -1,5 +1,6 @@
 package diy.arirangnewsapi.screen.main.scrab
 
+import android.content.Context
 import android.util.Log
 import androidx.appcompat.view.ActionMode
 import androidx.lifecycle.LiveData
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import diy.arirangnewsapi.data.repository.News.NewsRepository
 import diy.arirangnewsapi.data.repository.Translation.WordRepository
+import diy.arirangnewsapi.data.repository.sharedPreference.SharedPreferencesRepository
 import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.model.word.WordModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,6 +19,7 @@ import kotlinx.coroutines.withContext
 class SharedViewModel(
     private val newsRepository: NewsRepository,
     private val wordRepository: WordRepository,
+    private val sharedPreferencesRepository: SharedPreferencesRepository,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -28,11 +31,17 @@ class SharedViewModel(
     val selectedNews = MutableLiveData<MutableList<NewsDetailModel>?>(mutableListOf())
     val selectedWords = MutableLiveData<MutableList<WordModel>?>(mutableListOf())
 
-    private val _isActionModeActive = MutableLiveData<Boolean>(false)
+    private val _isActionModeActive = MutableLiveData(false)
     val isActionModeActive: LiveData<Boolean> = _isActionModeActive
 
     private val _actionMode = MutableLiveData<ActionMode?>()
     val actionMode: LiveData<ActionMode?> = _actionMode
+
+
+
+    fun deleteFromSharedPreference(){
+        sharedPreferencesRepository.removeWordFromSharedPreferences()
+    }
 
 
     fun setActionMode(mode: ActionMode?) {
@@ -90,7 +99,7 @@ class SharedViewModel(
 
     // 삭제 로직
     suspend fun deleteSelectedNews() {
-        // 선택된 아이템들의 url(primary key)를 따옴
+        // 선택된 아이템들의 url(primary key)를 map 으로 따오기
         val selectedUrls = selectedNews.value?.map {
             it.newsUrl
         } ?: emptyList()
@@ -99,6 +108,8 @@ class SharedViewModel(
             withContext(ioDispatcher) {
                 newsRepository.deleteSelectedNews(selectedUrls)
                 selectedNews.value?.clear()
+                //deleteFromSharedPreference() 이러면 어떤 데이터를 누르든 간에 무조건 삭제함
+                // 그러면 내가 선택한 데이터랑 shared랑 공통 분모가 있어야 하는데..
             }
         }
 

@@ -6,6 +6,7 @@ import diy.arirangnewsapi.data.repository.News.DefaultNewsRepository
 import diy.arirangnewsapi.data.repository.News.NewsRepository
 import diy.arirangnewsapi.data.repository.Translation.DefaultWordRepository
 import diy.arirangnewsapi.data.repository.Translation.WordRepository
+import diy.arirangnewsapi.data.repository.sharedPreference.SharedPreferencesRepository
 import diy.arirangnewsapi.model.word.WordModel
 import diy.arirangnewsapi.screen.main.home.HomeViewModel
 import diy.arirangnewsapi.screen.main.home.detail.NewsDetailViewModel
@@ -28,9 +29,15 @@ val appModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { MyWordViewModel(get()) }
     viewModel { (wordModel: WordModel) -> WordDetailViewModel(wordModel) }
-    viewModel { TodayWordViewModel(get(),get()) }
+    viewModel { TodayWordViewModel(get(), get()) }
     viewModel { ScrabViewModel(get()) }
-    viewModel { (newsDetailEntity: NewsDetailEntity) -> ScrabDetailViewModel(newsDetailEntity) }
+    viewModel { (newsDetailEntity: NewsDetailEntity) ->
+        ScrabDetailViewModel(
+            newsDetailEntity,
+            get(),
+            get()
+        )
+    }
     viewModel { (newsDetailEntity: NewsDetailEntity) ->
         NewsDetailViewModel(
             newsDetailEntity,
@@ -40,13 +47,13 @@ val appModule = module {
             get()
         )
     }
-    viewModel { SharedViewModel(get(), get(), get()) }
+    viewModel { SharedViewModel(get(), get(), get(), get()) }
 
 
     single<NewsRepository> { DefaultNewsRepository(get(), get(), get()) }
     single<WordRepository> { DefaultWordRepository(get(), get()) }
 
-
+    single { SharedPreferencesRepository(get()) }
 
 
     single { provideGsonConvertFactory() }
