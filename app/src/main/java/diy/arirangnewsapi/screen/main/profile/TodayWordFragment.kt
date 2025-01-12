@@ -3,6 +3,10 @@ package diy.arirangnewsapi.screen.main.profile
 
 import android.content.Context
 import android.util.Log
+import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.widget.TextView
 import diy.arirangnewsapi.databinding.FragmentProfileBinding
 import diy.arirangnewsapi.screen.base.BaseFragment
 import diy.arirangnewsapi.util.data_update_receiver.DataUpdateReceiver.Companion.ORIGINAL_KEY
@@ -21,6 +25,8 @@ class TodayWordFragment : BaseFragment<TodayWordViewModel, FragmentProfileBindin
         FragmentProfileBinding.inflate(layoutInflater)
 
     override fun observeData() {
+
+
         viewModel.originalWordLiveData.observe(viewLifecycleOwner) {
             Log.d("latestNewData",it.toString())
             binding.originalWordTextView.text = it
@@ -48,8 +54,40 @@ class TodayWordFragment : BaseFragment<TodayWordViewModel, FragmentProfileBindin
             binding.translatedWordTextView.text = " "
 
         }
+
+        val translatedWordTextView: TextView = binding.translatedWordTextView
+        val overlayTextView: TextView = binding.overlayTextView
+
+        binding.overlayTextView.setOnClickListener{
+            fadeOut(overlayTextView) // 가림 텍스트에 fade out 애니메이션
+            fadeIn(translatedWordTextView) // 번역본에 fade in 애니메이션
+        }
+
+
+
+
     }
 
+
+    fun fadeIn(view: View) {
+        view.visibility = View.VISIBLE
+        val fadeIn = AlphaAnimation(0f, 1f)
+        fadeIn.duration = 300
+        view.startAnimation(fadeIn)
+    }
+
+    fun fadeOut(view: View) {
+        val fadeOut = AlphaAnimation(1f, 0f)
+        fadeOut.duration = 300
+        fadeOut.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {}
+            override fun onAnimationEnd(animation: Animation?) {
+                view.visibility = View.GONE
+            }
+            override fun onAnimationRepeat(animation: Animation?) {}
+        })
+        view.startAnimation(fadeOut)
+    }
 
 
 

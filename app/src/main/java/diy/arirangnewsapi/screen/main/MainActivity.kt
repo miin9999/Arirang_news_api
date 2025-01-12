@@ -1,5 +1,6 @@
 package diy.arirangnewsapi.screen.main
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -25,6 +26,8 @@ import diy.arirangnewsapi.util.data_update_receiver.DataUpdateReceiver
 
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.Calendar
+import java.util.TimeZone
 
 
 @Suppress("DEPRECATION")
@@ -45,16 +48,12 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
 
 
         initViews()
-        setupAlarm()
+        setupDailyAlarm()
 
 
     }
-    private fun setupAlarm() {
-
-
-        Log.d("alarm Main","setupAlarm")
-
-
+    @SuppressLint("ScheduleExactAlarm")
+    private fun setupDailyAlarm() {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(this, DataUpdateReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
@@ -64,17 +63,31 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // 15분 간격 반복 (밀리초 단위)
-        val interval = 60 * 1000L //15 * 60 * 1000L = 15분
-        val triggerAtMillis = SystemClock.elapsedRealtime() + interval
+        // 한국 시간 기준 00:00 설정
+        val calendar = Calendar.getInstance().apply {
+            timeZone = TimeZone.getTimeZone("Asia/Seoul") // 한국 시간대
+            set(Calendar.HOUR_OF_DAY, 0) // 00시
+            set(Calendar.MINUTE, 0)     // 00분
+            set(Calendar.SECOND, 0)     // 00초
+            set(Calendar.MILLISECOND, 0)
 
-        alarmManager.setRepeating(
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            // 현재 시간이 이미 자정을 지난 경우, 다음 날로 설정
+            if (timeInMillis <= System.currentTimeMillis()) {
+                add(Calendar.DAY_OF_YEAR, 1)
+            }
+        }
+
+        val triggerAtMillis = System.currentTimeMillis() + 60 * 1000
+        // 정확한 시간에 알람 실행
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
             triggerAtMillis,
-            interval,
             pendingIntent
         )
+
+        Log.d("alarm Main", "Daily alarm set for ${calendar.time}")
     }
+
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
