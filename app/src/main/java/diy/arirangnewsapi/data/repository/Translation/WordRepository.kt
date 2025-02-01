@@ -1,6 +1,7 @@
 package diy.arirangnewsapi.data.repository.Translation
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import diy.arirangnewsapi.data.entity.WordEntity
 
 interface WordRepository {
@@ -12,5 +13,7 @@ interface WordRepository {
     suspend fun deleteSelectedWords(id: List<Long?>)
 
     suspend fun getRandomOneWord():WordEntity?
+
+    fun getWordCount(): LiveData<Int>
 
 }

@@ -17,7 +17,7 @@ class ScrabViewModel(
 
 
     val scrapedFragmentLiveData: LiveData<List<NewsDetailEntity?>> = newsRepository.getAllScrapedNews()
-
+    var scrapedNewsCount : LiveData<Int> = newsRepository.getScrapedNewsCount()
 
     override fun fetchData(): Job = viewModelScope.launch {
 

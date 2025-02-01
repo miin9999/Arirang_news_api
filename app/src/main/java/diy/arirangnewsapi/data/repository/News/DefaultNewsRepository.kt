@@ -46,5 +46,9 @@ class DefaultNewsRepository(
         return newsDao.isNewsScrapped(newsUrl)
     }
 
+    override fun getScrapedNewsCount(): LiveData<Int> {
+        return newsDao.getScrapedNewsCount()
+    }
+
 
 }

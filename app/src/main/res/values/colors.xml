@@ -9,6 +9,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="gray">#aaaaaa</color>
 
-    <color name="main_green_color">#69AB2D</color>
+    <color name="main_green_color">#82BB4E</color>
+    <color name="sub_green_color">#5BBE5B</color> <!-- 50% 투명한 초록 -->
 
 </resources>

@@ -2,6 +2,7 @@ package diy.arirangnewsapi.data.repository.Translation
 
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import diy.arirangnewsapi.data.db.dao.WordDao
 import diy.arirangnewsapi.data.entity.WordEntity
 import kotlinx.coroutines.CoroutineDispatcher
@@ -28,6 +29,8 @@ class DefaultWordRepository(
     override suspend fun getRandomOneWord(): WordEntity? = withContext(ioDispatcher){
         wordDao.getOneWord()
     }
+
+    override fun getWordCount(): LiveData<Int> = wordDao.getWordCount()
 
 
 }

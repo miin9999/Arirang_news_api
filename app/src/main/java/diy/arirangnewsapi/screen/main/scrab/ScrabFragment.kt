@@ -4,8 +4,10 @@ import android.util.Log
 
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.view.ActionMode
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import diy.arirangnewsapi.databinding.FragmentScrabBinding
 import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.screen.base.BaseFragment
@@ -67,16 +69,31 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>(), Action
 
     }
 
-    fun checkBoxObserve()  = sharedViewModel.isCheckBoxVisibleOfScrapedNews.observe(viewLifecycleOwner){
+    private fun checkBoxObserve()  = sharedViewModel.isCheckBoxVisibleOfScrapedNews.observe(viewLifecycleOwner){
         recyclerViewAdapter.notifyDataSetChanged()
         Log.d("isCheckBoxVisible",it.toString())
+    }
+
+    private fun scrapedNewsCountObserve() = viewModel.scrapedNewsCount.observe(viewLifecycleOwner){ count ->
+
+        val tutorialImageView = binding.tutorialImageView
+        val wordRecyclerView = binding.recyclerView
+        if (count == 0) {
+            tutorialImageView.visibility = View.VISIBLE
+            wordRecyclerView.visibility = View.GONE
+        } else {
+            tutorialImageView.visibility = View.GONE
+            wordRecyclerView.visibility = View.VISIBLE
+        }
     }
 
 
     override fun initViews(){
 
         binding.recyclerView.adapter = recyclerViewAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         checkBoxObserve()
+        scrapedNewsCountObserve()
 
 
     }

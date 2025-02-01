@@ -1,6 +1,7 @@
 package diy.arirangnewsapi.data.db.dao
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -31,4 +32,9 @@ interface WordDao {
 
     @Query("SELECT COUNT(*) FROM WordEntity WHERE id =:id")
     suspend fun isWordScrapped(id: Long): Int
+
+    @Query("SELECT COUNT(*) FROM WordEntity")
+    fun getWordCount(): LiveData<Int>
+
+
 }

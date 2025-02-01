@@ -1,6 +1,7 @@
 package diy.arirangnewsapi.data.repository.News
 
 import androidx.lifecycle.LiveData
+import diy.arirangnewsapi.data.db.dao.NewsDao
 import diy.arirangnewsapi.data.entity.NewsDetailEntity
 import diy.arirangnewsapi.model.news.NewsDetailModel
 
@@ -27,6 +28,8 @@ interface NewsRepository {
 
 
     suspend fun isNewsScraped(newsUrl: String):Int
+
+    fun getScrapedNewsCount(): LiveData<Int>
 
 
 

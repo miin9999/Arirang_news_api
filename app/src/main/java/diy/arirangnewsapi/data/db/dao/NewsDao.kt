@@ -34,4 +34,8 @@ interface NewsDao {
     @Query("SELECT COUNT(*) FROM NewsDetailEntity WHERE newsUrl = :newsUrl")
     suspend fun isNewsScrapped(newsUrl: String): Int
 
+    @Query("SELECT COUNT(*) FROM NewsDetailEntity")
+    fun getScrapedNewsCount(): LiveData<Int>
+
+
 }

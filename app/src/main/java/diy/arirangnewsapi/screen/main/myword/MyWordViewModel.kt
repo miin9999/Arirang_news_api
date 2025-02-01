@@ -1,6 +1,7 @@
 package diy.arirangnewsapi.screen.main.myword
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import diy.arirangnewsapi.data.entity.WordEntity
 import diy.arirangnewsapi.data.repository.Translation.WordRepository
@@ -17,7 +18,7 @@ class MyWordViewModel(
 
 
     val wordsFromRoom: LiveData<List<WordEntity?>> = wordRepository.getAllWord()
-
+    var wordCount : LiveData<Int> = wordRepository.getWordCount()
 
     override fun fetchData(): Job = viewModelScope.launch {
     }

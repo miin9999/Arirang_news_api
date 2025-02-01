@@ -7,9 +7,11 @@ import android.util.Log
 
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.view.ActionMode
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import diy.arirangnewsapi.R
 import diy.arirangnewsapi.databinding.FragmentMywordBinding
 import diy.arirangnewsapi.model.word.WordModel
 import diy.arirangnewsapi.screen.base.BaseFragment
@@ -65,6 +67,24 @@ class MyWordFragment:BaseFragment<MyWordViewModel,FragmentMywordBinding>(), Acti
 
 
 
+    private fun firstViewObserve() = viewModel.wordCount.observe(viewLifecycleOwner){ count->
+
+        val tutorialImageView = binding.tutorialImageView
+        val wordRecyclerView = binding.recyclerView
+        if (count == 0) {
+            tutorialImageView.visibility = View.VISIBLE
+            wordRecyclerView.visibility = View.GONE
+        } else {
+            tutorialImageView.visibility = View.GONE
+            wordRecyclerView.visibility = View.VISIBLE
+        }
+
+
+    }
+
+
+
+
 
 
 
@@ -80,6 +100,7 @@ class MyWordFragment:BaseFragment<MyWordViewModel,FragmentMywordBinding>(), Acti
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         checkBoxObserve()
+        firstViewObserve()
 
 
     }
