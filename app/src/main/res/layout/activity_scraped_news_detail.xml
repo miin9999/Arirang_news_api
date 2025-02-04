@@ -28,6 +28,7 @@
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="13dp"
         android:textSize="24sp"
+        android:textIsSelectable="true"
         app:layout_constraintBottom_toTopOf="@id/dateTextViewOfDetail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

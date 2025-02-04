@@ -46,74 +46,61 @@ class NewsDetailActivity : BaseActivity<NewsDetailViewModel, ActivityNewsDetailB
     @SuppressLint("ClickableViewAccessibility")
     override fun initViews() = with(binding) {
 
+        setupTextSelectionActionMode(contentTextViewOfDetail)
+        setupTextSelectionActionMode(titleTextviewOfDetail)
 
-        Log.d("ActionMode", "Action mode started222??")
-        val textView: TextView = binding.contentTextViewOfDetail
+        //Log.d("ActionMode", "Action mode started222??")
+
+    }
+
+    private fun setupTextSelectionActionMode(textView: TextView) {
         textView.customSelectionActionModeCallback = object : ActionMode.Callback {
             override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-                Log.d("ActionMode", "Action mode started")
-                // 기존 메뉴를 비우고 커스텀 메뉴 추가
-                menu?.let {
-                    menu.clear()
-                    menu.add("추가")
-                        .setOnMenuItemClickListener {
-                            // 선택된 텍스트 가져오기
-                            val selectedText = textView.text.substring(
-                                textView.selectionStart,
-                                textView.selectionEnd
-                            )
-                            lifecycleScope.launch {
-                                try {
-                                    withContext(Dispatchers.IO) {
-                                        addToVocabulary(selectedText)
-                                    }
-                                    withContext(Dispatchers.Main) {
-                                        Toast.makeText(
-                                            this@NewsDetailActivity,
-                                            "단어가 저장되었습니다!",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
+                Log.d("ActionMode", "Action mode started for ${textView.id}")
 
-                                } catch (e: Exception) {
-                                    Log.e("Error", "작업 실패: ${e.message}")
-                                    withContext(Dispatchers.Main) {
-                                        Toast.makeText(
-                                            this@NewsDetailActivity,
-                                            "저장 중 오류 발생!",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                }
-
-                            }
-
-                            mode?.finish() // 액션 모드 종료
-                            true
-                        }
+                menu?.apply {
+                    clear()
+                    add("추가").setOnMenuItemClickListener {
+                        val selectedText = textView.text.substring(
+                            textView.selectionStart,
+                            textView.selectionEnd
+                        )
+                        saveSelectedText(selectedText)
+                        mode?.finish() // 액션 모드 종료
+                        true
+                    }
                 }
-
                 return true
             }
 
-            override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean {
-                return false
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean = false
+            override fun onDestroyActionMode(mode: ActionMode?) {}
+        }
+    }
+
+    private fun saveSelectedText(selectedText: String) {
+        lifecycleScope.launch {
+            try {
+                withContext(Dispatchers.IO) { addToVocabulary(selectedText) }
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@NewsDetailActivity, "단어가 저장되었습니다!", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.e("Error", "작업 실패: ${e.message}")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@NewsDetailActivity, "저장 중 오류 발생!", Toast.LENGTH_SHORT).show()
+                }
             }
-
-            override fun onActionItemClicked(p0: ActionMode?, p1: MenuItem?): Boolean {
-                return false
-            }
-
-            override fun onDestroyActionMode(p0: ActionMode?) {
-
-            }
-
         }
     }
 
     suspend fun addToVocabulary(textThatIWantToTranslate: String) {
         viewModel.addButtonToVoca(textThatIWantToTranslate)
     }
+
+
+
 
 
     override fun observeData() =
