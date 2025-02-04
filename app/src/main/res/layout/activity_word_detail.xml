@@ -41,7 +41,7 @@
                 android:layout_marginTop="10dp"
                 android:paddingStart="5dp"
                 android:paddingTop="15dp"
-                android:text="저장한 단어"
+                android:text="저장한 영문"
                 android:textSize="15sp" />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:layout_marginTop="10dp"
                 android:paddingStart="5dp"
                 android:paddingTop="15dp"
-                android:text="번역된 단어"
+                android:text="번역본"
                 android:textSize="15sp" />
 
             <TextView

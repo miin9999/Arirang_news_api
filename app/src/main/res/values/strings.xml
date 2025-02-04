@@ -5,7 +5,7 @@
     <string name="menu_home">홈</string>
     <string name="menu_scrab">스크랩</string>
     <string name="menu_myword">단어장</string>
-    <string name="menu_profile">내 정보</string>
+    <string name="menu_todayEng">오늘의 영어</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
