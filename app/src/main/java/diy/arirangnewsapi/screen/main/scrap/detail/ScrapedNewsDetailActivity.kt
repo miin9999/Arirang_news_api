@@ -1,8 +1,7 @@
-package diy.arirangnewsapi.screen.main.scrab.detail
+package diy.arirangnewsapi.screen.main.scrap.detail
 
 import android.content.Context
 import android.content.Intent
-import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.ActionMode
 import android.view.Menu
@@ -11,12 +10,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import diy.arirangnewsapi.R
 import diy.arirangnewsapi.data.entity.NewsDetailEntity
 import diy.arirangnewsapi.databinding.ActivityScrapedNewsDetailBinding
 import diy.arirangnewsapi.screen.base.BaseActivity
-import diy.arirangnewsapi.screen.main.home.detail.NewsDetailViewModel
-import diy.arirangnewsapi.screen.main.scrab.ScrabViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

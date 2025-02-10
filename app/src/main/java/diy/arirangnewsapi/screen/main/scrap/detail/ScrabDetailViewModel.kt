@@ -1,15 +1,12 @@
-package diy.arirangnewsapi.screen.main.scrab.detail
+package diy.arirangnewsapi.screen.main.scrap.detail
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.cloud.translate.Translate
 import diy.arirangnewsapi.data.entity.NewsDetailEntity
 import diy.arirangnewsapi.data.entity.WordEntity
-import diy.arirangnewsapi.data.repository.News.NewsRepository
 import diy.arirangnewsapi.data.repository.Translation.WordRepository
-import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.screen.base.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

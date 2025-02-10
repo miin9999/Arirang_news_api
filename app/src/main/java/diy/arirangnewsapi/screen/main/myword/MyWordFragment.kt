@@ -11,13 +11,12 @@ import android.view.View
 import androidx.appcompat.view.ActionMode
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import diy.arirangnewsapi.R
 import diy.arirangnewsapi.databinding.FragmentMywordBinding
 import diy.arirangnewsapi.model.word.WordModel
 import diy.arirangnewsapi.screen.base.BaseFragment
 import diy.arirangnewsapi.screen.main.MainActivity
 import diy.arirangnewsapi.screen.main.myword.detail.WordDetailActivity
-import diy.arirangnewsapi.screen.main.scrab.SharedViewModel
+import diy.arirangnewsapi.screen.main.scrap.SharedViewModel
 import diy.arirangnewsapi.widget.adapter.listener.news.WordItemClickLIstener
 import diy.arirangnewsapi.widget.adapter.word.WordAdapter
 import kotlinx.coroutines.launch

@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SystemClock
 import android.util.Log
 import android.view.MenuItem
 import androidx.annotation.IdRes
@@ -17,11 +16,12 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import diy.arirangnewsapi.R
 import diy.arirangnewsapi.databinding.ActivityMainBinding
+import diy.arirangnewsapi.screen.main.setting.SettingFragment
 import diy.arirangnewsapi.screen.main.home.HomeFragment
 import diy.arirangnewsapi.screen.main.myword.MyWordFragment
 import diy.arirangnewsapi.screen.main.profile.TodayWordFragment
-import diy.arirangnewsapi.screen.main.scrab.ScrabFragment
-import diy.arirangnewsapi.screen.main.scrab.SharedViewModel
+import diy.arirangnewsapi.screen.main.scrap.ScrapFragment
+import diy.arirangnewsapi.screen.main.scrap.SharedViewModel
 import diy.arirangnewsapi.util.data_update_receiver.DataUpdateReceiver
 
 import kotlinx.coroutines.launch
@@ -77,11 +77,11 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
             }
         }
 
-        val triggerAtMillis = System.currentTimeMillis() + 60 * 1000
+        //val triggerAtMillis = System.currentTimeMillis() + 60 * 1000 // 1분 단위 테스트 용, 이걸 calendar.timeInMillis 대신 넣으면 됨
         // 정확한 시간에 알람 실행
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            triggerAtMillis,
+            calendar.timeInMillis,
             pendingIntent
         )
 
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
                 true
             }
             R.id.menu_scrab ->{
-                showFragment(ScrabFragment.newInstance(),ScrabFragment.TAG)
+                showFragment(ScrapFragment.newInstance(),ScrapFragment.TAG)
                 true
 
             }
@@ -114,6 +114,15 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
 
                 true
             }
+
+            R.id.menu_setting ->{
+                showFragment(SettingFragment.newInstance(),SettingFragment.TAG)
+
+                true
+            }
+
+
+
 
             else-> false
         }

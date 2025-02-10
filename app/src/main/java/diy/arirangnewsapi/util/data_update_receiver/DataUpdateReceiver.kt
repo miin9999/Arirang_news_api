@@ -57,11 +57,12 @@ class DataUpdateReceiver : BroadcastReceiver() {
                 add(Calendar.DAY_OF_YEAR, 1) // 다음 날
             }
 
-            val triggerAtMillis = System.currentTimeMillis() + 60 * 1000
+            //val triggerAtMillis = System.currentTimeMillis() + 60 * 1000 // 1분 단위 테스트 용
+
+
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
-                triggerAtMillis,
-                //calendar.timeInMillis,
+                calendar.timeInMillis,
                 pendingIntent
             )
         }

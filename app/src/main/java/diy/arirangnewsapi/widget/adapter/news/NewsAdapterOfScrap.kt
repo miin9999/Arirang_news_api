@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.databinding.NewsListScrapBinding
-import diy.arirangnewsapi.screen.main.scrab.SharedViewModel
+import diy.arirangnewsapi.screen.main.scrap.SharedViewModel
 import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 
 

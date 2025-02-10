@@ -1,6 +1,5 @@
-package diy.arirangnewsapi.screen.main.scrab
+package diy.arirangnewsapi.screen.main.scrap
 
-import android.content.Context
 import android.util.Log
 import androidx.appcompat.view.ActionMode
 import androidx.lifecycle.LiveData

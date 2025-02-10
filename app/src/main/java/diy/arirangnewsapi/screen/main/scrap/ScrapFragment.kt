@@ -1,4 +1,4 @@
-package diy.arirangnewsapi.screen.main.scrab
+package diy.arirangnewsapi.screen.main.scrap
 
 import android.util.Log
 
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import diy.arirangnewsapi.databinding.FragmentScrabBinding
 import diy.arirangnewsapi.model.news.NewsDetailModel
 import diy.arirangnewsapi.screen.base.BaseFragment
-import diy.arirangnewsapi.screen.main.scrab.detail.ScrapedNewsDetailActivity
+import diy.arirangnewsapi.screen.main.scrap.detail.ScrapedNewsDetailActivity
 import diy.arirangnewsapi.widget.adapter.news.NewsAdapterOfScrap
 import diy.arirangnewsapi.widget.adapter.listener.news.NewsItemClickListener
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -20,10 +20,10 @@ import diy.arirangnewsapi.screen.main.MainActivity
 import kotlinx.coroutines.launch
 
 
-class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>(), ActionMode.Callback {
+class ScrapFragment: BaseFragment<ScrapViewModel,FragmentScrabBinding>(), ActionMode.Callback {
 
 
-    override val viewModel by viewModel<ScrabViewModel>()
+    override val viewModel by viewModel<ScrapViewModel>()
 
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
@@ -40,7 +40,7 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>(), Action
             }
 
             override fun onLongItemClick(newsDetailModel: NewsDetailModel) {
-                (activity as? MainActivity)?.startActionMode(this@ScrabFragment)
+                (activity as? MainActivity)?.startActionMode(this@ScrapFragment)
             }
 
             override fun onRemoveItemClick(newsDetailModel: NewsDetailModel) {
@@ -100,7 +100,7 @@ class ScrabFragment: BaseFragment<ScrabViewModel,FragmentScrabBinding>(), Action
 
     companion object{
 
-        fun newInstance() = ScrabFragment()
+        fun newInstance() = ScrapFragment()
 
         const val TAG = "ScrabFragment"
     }

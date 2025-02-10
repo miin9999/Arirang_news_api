@@ -21,6 +21,11 @@
         android:title="@string/menu_todayEng"
         android:icon="@drawable/today_eng"/>
 
+    <item
+        android:id="@+id/menu_setting"
+        android:title="@string/menu_license"
+        android:icon="@drawable/icon_license"/>
+
 
 
 

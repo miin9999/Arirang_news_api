@@ -24,7 +24,10 @@
             android:name=".screen.main.myword.detail.WordDetailActivity"
             android:exported="false" />
         <activity android:name=".screen.main.home.detail.NewsDetailActivity" />
-        <activity android:name=".screen.main.scrab.detail.ScrapedNewsDetailActivity" />
+        <activity android:name=".screen.main.scrap.detail.ScrapedNewsDetailActivity" />
+        <activity android:name=".screen.main.setting.api_reference.ApiReferenceActivity"/>
+        <activity android:name=".screen.main.setting.license.LicenseActivity"/>
+
         <activity
             android:name=".screen.main.MainActivity"
             android:exported="true">

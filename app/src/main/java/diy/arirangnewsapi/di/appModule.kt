@@ -13,9 +13,13 @@ import diy.arirangnewsapi.screen.main.home.detail.NewsDetailViewModel
 import diy.arirangnewsapi.screen.main.myword.MyWordViewModel
 import diy.arirangnewsapi.screen.main.myword.detail.WordDetailViewModel
 import diy.arirangnewsapi.screen.main.profile.TodayWordViewModel
-import diy.arirangnewsapi.screen.main.scrab.ScrabViewModel
-import diy.arirangnewsapi.screen.main.scrab.SharedViewModel
-import diy.arirangnewsapi.screen.main.scrab.detail.ScrabDetailViewModel
+import diy.arirangnewsapi.screen.main.scrap.ScrapViewModel
+import diy.arirangnewsapi.screen.main.scrap.SharedViewModel
+import diy.arirangnewsapi.screen.main.scrap.detail.ScrabDetailViewModel
+import diy.arirangnewsapi.screen.main.setting.SettingViewModel
+import diy.arirangnewsapi.screen.main.setting.api_reference.ApiReferenceActivity
+import diy.arirangnewsapi.screen.main.setting.api_reference.ApiReferenceViewModel
+import diy.arirangnewsapi.screen.main.setting.license.LicenseViewModel
 
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
@@ -30,7 +34,7 @@ val appModule = module {
     viewModel { MyWordViewModel(get()) }
     viewModel { (wordModel: WordModel) -> WordDetailViewModel(wordModel) }
     viewModel { TodayWordViewModel(get(), get()) }
-    viewModel { ScrabViewModel(get()) }
+    viewModel { ScrapViewModel(get()) }
     viewModel { (newsDetailEntity: NewsDetailEntity) ->
         ScrabDetailViewModel(
             newsDetailEntity,
@@ -48,6 +52,9 @@ val appModule = module {
         )
     }
     viewModel { SharedViewModel(get(), get(), get(), get()) }
+    viewModel { SettingViewModel() }
+    viewModel {LicenseViewModel()}
+    viewModel{ApiReferenceViewModel()}
 
 
     single<NewsRepository> { DefaultNewsRepository(get(), get(), get()) }

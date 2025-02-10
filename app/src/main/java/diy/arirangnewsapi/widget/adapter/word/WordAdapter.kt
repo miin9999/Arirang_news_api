@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import diy.arirangnewsapi.databinding.WordListBinding
 import diy.arirangnewsapi.model.word.WordModel
-import diy.arirangnewsapi.screen.main.scrab.SharedViewModel
+import diy.arirangnewsapi.screen.main.scrap.SharedViewModel
 import diy.arirangnewsapi.widget.adapter.listener.news.WordItemClickLIstener
 
 
