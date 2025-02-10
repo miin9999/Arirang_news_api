@@ -10,7 +10,7 @@ properties.load(project.rootProject.file("local.properties").newDataInputStream(
 
 android {
     namespace 'diy.arirangnewsapi'
-    compileSdk 35
+    compileSdk 34
     packagingOptions {
         exclude 'META-INF/INDEX.LIST'
         exclude 'META-INF/DEPENDENCIES'
@@ -19,7 +19,7 @@ android {
     defaultConfig {
         applicationId "diy.arirangnewsapi"
         minSdk 26
-        targetSdk 35
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -27,8 +27,15 @@ android {
 
         buildConfigField "String", "arirang_api_key",properties["arirang_api_key"]
 
+    }
 
-
+    signingConfigs {
+        create("release") {
+            storeFile = file(rootProject.file("keystore1.jks"))
+            storePassword = project.findProperty("storePassword") as String
+            keyAlias = project.findProperty("keyAlias") as String
+            keyPassword = project.findProperty("keyPassword") as String
+        }
     }
 
     buildTypes {
