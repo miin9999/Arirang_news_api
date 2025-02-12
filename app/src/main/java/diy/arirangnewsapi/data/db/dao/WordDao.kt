@@ -12,8 +12,8 @@ import diy.arirangnewsapi.data.entity.WordEntity
 @Dao
 interface WordDao {
 
-    @Query("SELECT * FROM WordEntity ORDER BY RANDOM() LIMIT 1")
-    suspend fun getOneWord(): WordEntity?
+    @Query("SELECT * FROM WordEntity WHERE id != :excludedId ORDER BY RANDOM() LIMIT 1")
+    suspend fun getOneWord(excludedId: Long): WordEntity?
 
     @Query("SELECT * FROM WordEntity")
     fun getAllWords(): LiveData<List<WordEntity?>>

@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
             }
         }
 
-        //val triggerAtMillis = System.currentTimeMillis() + 60 * 1000 // 1분 단위 테스트 용, 이걸 calendar.timeInMillis 대신 넣으면 됨
+        val triggerAtMillis = System.currentTimeMillis() + 60 * 1000 // 1분 단위 테스트 용, 이걸 calendar.timeInMillis 대신 넣으면 됨
         // 정확한 시간에 알람 실행
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,

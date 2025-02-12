@@ -12,8 +12,6 @@ interface WordRepository {
 
     suspend fun deleteSelectedWords(id: List<Long?>)
 
-    suspend fun getRandomOneWord():WordEntity?
-
     fun getWordCount(): LiveData<Int>
 
 }
