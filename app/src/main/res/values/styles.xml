@@ -12,6 +12,10 @@
         <item name="android:background">@color/white</item>
         <item name="android:textIsSelectable">true</item>
 
+    </style>
 
+    <style name="Theme.ArirangNewsApi.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 </resources>
